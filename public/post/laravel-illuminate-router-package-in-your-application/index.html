@@ -1,0 +1,309 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="Personal Blog Of Gufran | Laravel Illuminate Router Package In Your Application">
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="google-site-verification" content="jVNul_ZvsOPuGmV4Y85HMquZOpo8z0nH4ViodkMePpY">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="twitter:site" content="@freatbeater">
+        <meta name="twitter:creator" content="@freatbeater">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Blag Of A Programmer">
+        <meta name="generator" content="Hodor">
+        <link rel="canonical" href="http://www.gufran.me" />
+
+        <title>Laravel Illuminate Router Package In Your Application</title>
+
+        <script src="//use.typekit.net/mnk2fni.js"></script>
+        <script>try{Typekit.load();}catch(e){}</script>
+        
+        <link rel="stylesheet" href="http://www.gufran.me/css/build/style.280920140312.css">
+
+    </head>
+    <body>
+        <header id="mobile-header" class="visible-xs">
+            <a id="home" href="http://www.gufran.me">
+                <i class="icon-home"></i> Home
+            </a>
+            <label for="menu-button-check" class="nav-menu-button">
+                <span></span>
+                <span class="mid"></span>
+                <span></span>
+            </label>
+        </header>
+        <input type="checkbox" id="menu-button-check" class="hidden">
+        <header id="main-header">
+            <ul id="nav">
+                <li class=" hidden-xs">
+                    <a href="http://www.gufran.me">
+                        <i class="icon-home"></i> Home
+                    </a>
+                </li>
+                <li class="">
+                    <a href="http://www.gufran.me/tags/">
+                        <i class="icon-tags"></i> Tags
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="contact-link" id="contact-section" target="_blank">
+                        <i class="icon-mail"></i> Contact
+                    </a>
+                </li>
+                <li>
+                    <a href="http://github.com/Gufran" target="_blank">
+                        <i class="icon-github"></i> Github
+                    </a>
+                </li>
+                <li>
+                    <a href="http://twitter.com/freatbeater" target="_blank">
+                        <i class="icon-twitter"></i> Twitter
+                    </a>
+                </li>
+            </ul>
+        </header>
+        <div id="main-contents">
+<div class="single-post">
+    <div class="container">
+        <div class="post-item" itemscope itemtype="http://schema.org/BlogPosting" role="article">
+            <div class="post-header">
+                <div class="blog-no-header"></div>
+            </div>
+            <div class="post-body">
+                <div class="meta">
+                    <i class="icon-date"></i> 
+                    <time itemprop="datePublished" datetime="29 April 2014" class="date">
+                        29 April 2014
+                    </time>
+                </div>
+                <h2 class="title" itemprop="name">Laravel Illuminate Router Package In Your Application</h2>
+                <div class="content" itemprop="description">
+                    <p>In my previous article I talked about consuming services from <code>Illuminate\Support</code> package, Now its time to talk about <code>Illuminate\Routing</code>.</p>
+
+<p>Laravel&#39;s router works wonder, and so do every other component of it, but to keep things to the point lets not talk about other components right now (you know they&#39;ll all have their own articles).<br>
+In this article I&#39;m going to talk about how you can get Laravel&#39;s routing package up in your application to handle every damn piece of routing.</p>
+
+<p>Here is the <a href="#tldr">TL;DR</a> version for impatient.</p>
+
+<p>For everyone else, If you don&#39;t already know about it, the <code>routing</code> component is the one which provides the <code>Route</code> facade and lets you define routes and filters</p>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="nx">Route</span><span class="o">::</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="s1">&#39;Hey there, World! How are you doing ?&#39;</span><span class="p">;</span>
+<span class="p">});</span>
+
+<span class="nx">Route</span><span class="o">::</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/hello&#39;</span><span class="p">,</span> <span class="s1">&#39;HelloController&#39;</span><span class="p">);</span>
+</code></pre></div>
+<p>Lets see how can you possibly pack your application into one file, not counting the controllers and models of course.</p>
+
+<p>We start by pulling in the <code>illuminate\routing</code> package via composer, so open up your terminal, initialise the composer by running</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">composer init
+</code></pre></div>
+<p>and run </p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">composer require illuminate<span class="se">\r</span>outing 4.1.*
+</code></pre></div>
+<p>Now, before proceeding, just require this one more package</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">composer require illuminate<span class="se">\e</span>vents 4.1.*
+</code></pre></div>
+<p>This is a little off the track as <code>router</code> depends on <code>events</code> package but do not state it as a composer dependency. Since we know (by looking at <code>Illuminate\Routing\Router::__constructor</code>) that it requires an instance of <code>EventDispatcher</code>, we pull that in as well.</p>
+
+<p>Moving on, its time to set every thing up. At this point I&#39;d recommend you to read this article I posted some time ago titled <em><a href="http://www.gufran.me/post/laravel-components">Use Laravel&#39;s Goodies In Your Application</a></em> which is about setting up Laravel&#39;s IoC container outside Laravel, once done we move on.</p>
+
+<p>You might want to create directories in your app root such as <code>Controllers</code> and <code>Models</code> which will contain your controllers and models respectively. I&#39;ll assume those directories are in place.</p>
+
+<p>I also want you to create a <code>routes.php</code> file in your project root and put this in the file</p>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="nv">$app</span><span class="p">[</span><span class="s1">&#39;router&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="k">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Because &#39;Hello, World!&#39; is too mainstream</span>
+    <span class="k">return</span> <span class="s1">&#39;Are you looking for me ?&#39;</span><span class="p">;</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>And then I want you to forget about this <code>routes.php</code> until the very end of this article.</p>
+
+<p>Now in your <code>index.php</code> file require the composer autoloader file and <code>illuminate\support\helper.php</code> too. Here is how I did it in my file</p>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="k">require</span> <span class="s1">&#39;vendor/autoload.php&#39;</span><span class="p">;</span>
+<span class="k">require</span> <span class="s1">&#39;vendor/illuminate/support/Illuminate/Support/helpers.php&#39;</span><span class="p">;</span>
+</code></pre></div>
+<p>Now register the laravel&#39;s autoloader and add those Controllers and Models directories with it to autoload our controllers and models. This is how it looks in my file:</p>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="nv">$basePath</span> <span class="o">=</span> <span class="nx">str_finish</span><span class="p">(</span><span class="nb">dirname</span><span class="p">(</span><span class="k">__FILE__</span><span class="p">),</span> <span class="s1">&#39;/&#39;</span><span class="p">);</span>
+<span class="nv">$controllersDirectory</span> <span class="o">=</span> <span class="nv">$basePath</span> <span class="o">.</span> <span class="s1">&#39;Controllers&#39;</span><span class="p">;</span>
+<span class="nv">$modelsDirectory</span> <span class="o">=</span> <span class="nv">$basePath</span> <span class="o">.</span> <span class="s1">&#39;Models&#39;</span><span class="p">;</span>
+
+<span class="c1">// register the autoloader and add directories</span>
+<span class="nx">Illuminate\Support\ClassLoader</span><span class="o">::</span><span class="na">register</span><span class="p">();</span>
+<span class="nx">Illuminate\Support\ClassLoader</span><span class="o">::</span><span class="na">addDirectories</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="nv">$controllersDirectory</span><span class="p">,</span> <span class="nv">$modelsDirectory</span><span class="p">));</span>
+</code></pre></div>
+<p>Next up, we need to create an instance of IoC container to run our application off of it, Simply instantiate the container and register it as our application:</p>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="c1">// Instantiate the container</span>
+<span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Illuminate\Container\Container</span><span class="p">();</span>
+
+<span class="c1">// Tell facade about the application instance</span>
+<span class="nx">Illuminate\Support\Facades\Facade</span><span class="o">::</span><span class="na">setFacadeApplication</span><span class="p">(</span><span class="nv">$app</span><span class="p">);</span>
+
+<span class="c1">// register application instance with container</span>
+<span class="nv">$app</span><span class="p">[</span><span class="s1">&#39;app&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$app</span><span class="p">;</span>
+
+<span class="c1">// set environment </span>
+<span class="nv">$app</span><span class="p">[</span><span class="s1">&#39;env&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;production&#39;</span><span class="p">;</span>
+</code></pre></div>
+<p>Cool, now with those preambles out of the way we can finally set up the routing.<br>
+A little bit of configuration is required before you can dispatch the router, thanks to Laravel&#39;s service providers you can just register the services with them. Go ahead and register the <code>EventServiceProvider</code> and <code>RoutingServiceProvider</code> like this:</p>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="nx">with</span><span class="p">(</span><span class="k">new</span> <span class="nx">Illuminate\Events\EventServiceProvider</span><span class="p">(</span><span class="nv">$app</span><span class="p">))</span><span class="o">-&gt;</span><span class="na">register</span><span class="p">();</span>
+<span class="nx">with</span><span class="p">(</span><span class="k">new</span> <span class="nx">Illuminate\Routing\RoutingServiceProvider</span><span class="p">(</span><span class="nv">$app</span><span class="p">))</span><span class="o">-&gt;</span><span class="na">register</span><span class="p">();</span>
+</code></pre></div>
+<p>If you remember, this <code>with()</code> function is actually provided by <code>Illuminate\Support\helpers.php</code> file which just returns whatever is given to it, so basically we are calling the <code>register()</code> method on instances of those service providers.  </p>
+
+<p>Speaking of configuration, this is all it takes. Yes, Crazy. I know that.</p>
+
+<p>Remember the <code>routes.php</code> file we create in very beginning ? its time to require that file now. Add this line in your index.php file</p>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="k">require</span> <span class="nv">$basePath</span> <span class="o">.</span> <span class="s1">&#39;routes.php&#39;</span><span class="p">;</span>
+</code></pre></div>
+<p>and before you try to run the app here is the spoiler, It won&#39;t work. Not quite yet, we&#39;ll fix that.</p>
+
+<p>We are now all set to dispatch the router, but before we can do that the router need to know about the request we want it to handle. This is where <code>Illuminate\Http\Request</code> come into play. You can instantiate the <code>Request</code> class with global variables and dispatch the router with it. On dispatch the router will return <code>Illuminate\Http\Response</code> which you can <code>send</code> back to the user. Here is how it is going to work:</p>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="c1">// Instantiate the request</span>
+<span class="nv">$request</span> <span class="o">=</span> <span class="nx">Illuminate\Http\Request</span><span class="o">::</span><span class="na">createFromGlobals</span><span class="p">();</span>
+
+<span class="c1">// Dispatch the router</span>
+<span class="nv">$response</span> <span class="o">=</span> <span class="nv">$app</span><span class="p">[</span><span class="s1">&#39;router&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">dispatch</span><span class="p">(</span><span class="nv">$request</span><span class="p">);</span>
+
+<span class="c1">// Send the response</span>
+<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">();</span>
+</code></pre></div>
+<p>Believe it or not (I highly recommend that you do :P) this is everything.</p>
+
+<h3><a name="tldr"></a>TL;DR</h3>
+
+<p>Here is the full and final <code>index.php</code> file as a TL;DR version</p>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="k">require</span> <span class="s1">&#39;vendor/autoload.php&#39;</span><span class="p">;</span>
+<span class="k">require</span> <span class="s1">&#39;vendor/illuminate/support/Illuminate/Support/helpers.php&#39;</span><span class="p">;</span>
+
+<span class="nv">$basePath</span> <span class="o">=</span> <span class="nx">str_finish</span><span class="p">(</span><span class="nb">dirname</span><span class="p">(</span><span class="k">__FILE__</span><span class="p">),</span> <span class="s1">&#39;/&#39;</span><span class="p">);</span>
+<span class="nv">$controllersDirectory</span> <span class="o">=</span> <span class="nv">$basePath</span> <span class="o">.</span> <span class="s1">&#39;Controllers&#39;</span><span class="p">;</span>
+<span class="nv">$modelsDirectory</span> <span class="o">=</span> <span class="nv">$basePath</span> <span class="o">.</span> <span class="s1">&#39;Models&#39;</span><span class="p">;</span>
+
+<span class="nx">Illuminate\Support\ClassLoader</span><span class="o">::</span><span class="na">register</span><span class="p">();</span>
+<span class="nx">Illuminate\Support\ClassLoader</span><span class="o">::</span><span class="na">addDirectories</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="nv">$controllersDirectory</span><span class="p">,</span> <span class="nv">$modelsDirectory</span><span class="p">));</span>
+
+<span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Illuminate\Container\Container</span><span class="p">;</span>
+<span class="nx">Illuminate\Support\Facades\Facade</span><span class="o">::</span><span class="na">setFacadeApplication</span><span class="p">(</span><span class="nv">$app</span><span class="p">);</span>
+
+<span class="nv">$app</span><span class="p">[</span><span class="s1">&#39;app&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$app</span><span class="p">;</span>
+<span class="nv">$app</span><span class="p">[</span><span class="s1">&#39;env&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;production&#39;</span><span class="p">;</span>
+
+<span class="nx">with</span><span class="p">(</span><span class="k">new</span> <span class="nx">Illuminate\Events\EventServiceProvider</span><span class="p">(</span><span class="nv">$app</span><span class="p">))</span><span class="o">-&gt;</span><span class="na">register</span><span class="p">();</span>
+<span class="nx">with</span><span class="p">(</span><span class="k">new</span> <span class="nx">Illuminate\Routing\RoutingServiceProvider</span><span class="p">(</span><span class="nv">$app</span><span class="p">))</span><span class="o">-&gt;</span><span class="na">register</span><span class="p">();</span>
+
+<span class="k">require</span> <span class="nv">$basePath</span> <span class="o">.</span> <span class="s1">&#39;routes.php&#39;</span><span class="p">;</span>
+
+<span class="nv">$request</span> <span class="o">=</span> <span class="nx">Illuminate\Http\Request</span><span class="o">::</span><span class="na">createFromGlobals</span><span class="p">();</span>
+<span class="nv">$response</span> <span class="o">=</span> <span class="nv">$app</span><span class="p">[</span><span class="s1">&#39;router&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">dispatch</span><span class="p">(</span><span class="nv">$request</span><span class="p">);</span>
+
+<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">();</span>
+</code></pre></div>
+<p>Now visit the application and you should see <strong>Are you looking for me ?</strong>. (By the way I really love the PHP server to check out this type to quick scripts, Invoke it by running <code>php -S localhost:8888</code> in project root directory)</p>
+
+<p>With <code>$app[&#39;router&#39;]</code> you can do everything that you normally do with <code>Route</code> facade in your Laravel application. You can route to controllers (your controllers will extend <code>Illuminate\Routing\Controller</code> instead of <code>BaseController</code>), create resources, create route filters, create routes group, bind models, match route to regex and whatnot.</p>
+
+<p>This is all for this article, Until the next post just give it a spin and experiment with your own controllers and models.<br>
+I hope you&#39;ll be able to find some good use of <code>illuminate\routing</code> in reviving a legacy codebase.</p>
+
+                </div> 
+            </div>
+            <div class="post-tags">
+                <i class="icon-tags"></i>
+                
+                <a class="tag_list_link" href="http://www.gufran.me/tag/Laravel">Laravel</a>
+                <span class="seperator">|</span>
+                
+                <a class="tag_list_link" href="http://www.gufran.me/tag/Module">Module</a>
+                <span class="seperator">|</span>
+                
+                <a class="tag_list_link" href="http://www.gufran.me/tag/Tips">Tips</a>
+                <span class="seperator">|</span>
+                
+            </div>
+            <ul class="post-socials">
+                <li><a href="https://www.facebook.com/sharer/sharer.php?u=http://www.gufran.me/post/laravel-illuminate-router-package-in-your-application&t=Laravel Illuminate Router Package In Your Application" target="_blank"><i class="icon-facebook"></i></a></li>
+                <li><a href="https://twitter.com/intent/tweet?original_referer=http://www.gufran.me/post/laravel-illuminate-router-package-in-your-application&text=Laravel Illuminate Router Package In Your Application&url=http://www.gufran.me/post/laravel-illuminate-router-package-in-your-application" target="_blank"><i class="icon-twitter"></i></a></li>
+                <li><a href="https://plus.google.com/share?url=http://www.gufran.me/post/laravel-illuminate-router-package-in-your-application" target="_blank"><i class="icon-google-plus"></i></a></li>
+            </ul>
+            <div id="disqus_thread" itemprop="comment"></div>
+            <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments.</a></noscript>
+        </div>
+    </div>
+    <div id="blog-pagination">
+        <ul>
+        	 
+            <li class="prev"><a href="http://www.gufran.me/post/laravel-illuminate-support-package-introduction"><i class="icon-arrow-left"></i><span>Prev</span></a></li>
+            
+             
+            <li class="separator"></li>
+            
+             
+            <li class="next"><a href="http://www.gufran.me/post/using-laravel-illuminate-config-package-outside-laravel"><span>Next</span><i class="icon-arrow-right"></i></a></li>
+            
+        </ul>
+    </div>
+</div>
+<script>
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//gufran-me.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+ </div>
+       <footer>
+        <div class="author">
+          <div class="container">
+            <div class="row" itemscope itemprop="author" itemtype="http://schema.org/Person">
+              <div class="col-md-4 col-sm-3 hidden-xs">
+                <img class="avatar" itemprop="image" src="http://www.gravatar.com/avatar/61a886b6d8b8e349a0ad8624992bc716?s=500" alt="Gufran">
+              </div>
+              <div class="col-md-8 col-sm-9">
+                <p><em>Hi, there!</em> My name is <span itemprop="name">Mohammad Gufran</span>.</p>
+                <p itemprop="description">I am a <span itemprop="jobTitle">programmer</span> who create things for web. Most of my time is spent in front of my computer browsing the web and writing codes for next cool project. I am a lifelong learner.<br/>You can contact me using email or send me a tweet.</p>
+                <div class="row" role="contentinfo">
+                  <div class="col-md-3 col-sm-3 social-button">
+                    <a class="author-link" rel="author" href="http://github.com/Gufran" target="_blank">
+                      <i class="icon-github"></i> github
+                    </a>
+                  </div>
+                  <div class="col-md-3 col-sm-3 social-button">
+                    <a class="author-link" rel="author" href="http://twitter.com/freatbeater" target="_blank">
+                      <i class="icon-twitter"></i> twitter
+                    </a>
+                  </div>
+                  <div class="col-md-3 col-sm-3 social-button">
+                    <a class="author-link" rel="author" href="http://plus.google.com/+GufranKhan24" target="_blank">
+                      <i class="icon-google-plus"></i> google+
+                    </a>
+                  </div>
+                  <div class="col-md-3 col-sm-3 social-button">
+                    <a class="author-link contact-link" href="#" target="_blank">
+                      <i class="icon-mail"></i> contact
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="bottom">
+            <div class="container">
+                <div id="copyright">All content, unless specified otherwise,  is available under <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Common License with Attribution and Share Alike</a></div>
+            </div>
+        </div>   
+       </footer> 
+       <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+       <script type="text/javascript" src="http://www.gufran.me/js/custom.280920140312.js"></script>   
+    </body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-46671921-1', 'gufran.me');
+  ga('require', 'displayfeatures');
+  ga('send', 'pageview');
+</script>
+</html>

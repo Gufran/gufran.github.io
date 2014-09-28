@@ -1,0 +1,45 @@
+version: 280920140312
+
+name: "Blag"
+description: "Blag Of A Programmer"
+
+destination: public
+
+url: "http://www.gufran.me"
+ga_domain: 'gufran.me'
+
+exclude: ['node_modules', 'Gulpfile.js', 'package.json', 'css/bootstrap.css', 'css/custom.css', 'css/icomoon.css', 'css/solarized.css', 'css/style.css']
+
+permalink: /post/:title
+tag_dir: tag
+paginate: 7
+paginate_path: "page-:num"
+encoding:     "utf-8"
+markdown_ext: "markdown,mkdown,mkdn,mkd,md"
+
+show_drafts: null
+unpublished: false
+
+markdown: redcarpet
+permalink: pretty
+highlighter: pygments
+excerpt_separator: "\n\n"
+
+user:
+  github: Gufran
+  twitter: freatbeater
+  google: +GufranKhan24
+  disqus_shortname: gufran-me
+  gravatar_hash: 61a886b6d8b8e349a0ad8624992bc716
+
+kramdown:
+  input:         GFM
+  auto_ids:      true
+  footnote_nr:   1
+  entity_output: as_char
+  smart_quotes:  lsquo,rsquo,ldquo,rdquo
+  fenced_code_blocks: true
+  use_coderay:   false
+
+redcloth:
+  hard_breaks: true

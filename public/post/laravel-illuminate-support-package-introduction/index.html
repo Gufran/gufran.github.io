@@ -1,0 +1,321 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="Personal Blog Of Gufran | Laravel Illuminate Support Package Introduction">
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="google-site-verification" content="jVNul_ZvsOPuGmV4Y85HMquZOpo8z0nH4ViodkMePpY">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="twitter:site" content="@freatbeater">
+        <meta name="twitter:creator" content="@freatbeater">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Blag Of A Programmer">
+        <meta name="generator" content="Hodor">
+        <link rel="canonical" href="http://www.gufran.me" />
+
+        <title>Laravel Illuminate Support Package Introduction</title>
+
+        <script src="//use.typekit.net/mnk2fni.js"></script>
+        <script>try{Typekit.load();}catch(e){}</script>
+        
+        <link rel="stylesheet" href="http://www.gufran.me/css/build/style.280920140312.css">
+
+    </head>
+    <body>
+        <header id="mobile-header" class="visible-xs">
+            <a id="home" href="http://www.gufran.me">
+                <i class="icon-home"></i> Home
+            </a>
+            <label for="menu-button-check" class="nav-menu-button">
+                <span></span>
+                <span class="mid"></span>
+                <span></span>
+            </label>
+        </header>
+        <input type="checkbox" id="menu-button-check" class="hidden">
+        <header id="main-header">
+            <ul id="nav">
+                <li class=" hidden-xs">
+                    <a href="http://www.gufran.me">
+                        <i class="icon-home"></i> Home
+                    </a>
+                </li>
+                <li class="">
+                    <a href="http://www.gufran.me/tags/">
+                        <i class="icon-tags"></i> Tags
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="contact-link" id="contact-section" target="_blank">
+                        <i class="icon-mail"></i> Contact
+                    </a>
+                </li>
+                <li>
+                    <a href="http://github.com/Gufran" target="_blank">
+                        <i class="icon-github"></i> Github
+                    </a>
+                </li>
+                <li>
+                    <a href="http://twitter.com/freatbeater" target="_blank">
+                        <i class="icon-twitter"></i> Twitter
+                    </a>
+                </li>
+            </ul>
+        </header>
+        <div id="main-contents">
+<div class="single-post">
+    <div class="container">
+        <div class="post-item" itemscope itemtype="http://schema.org/BlogPosting" role="article">
+            <div class="post-header">
+                <div class="blog-no-header"></div>
+            </div>
+            <div class="post-body">
+                <div class="meta">
+                    <i class="icon-date"></i> 
+                    <time itemprop="datePublished" datetime="24 April 2014" class="date">
+                        24 April 2014
+                    </time>
+                </div>
+                <h2 class="title" itemprop="name">Laravel Illuminate Support Package Introduction</h2>
+                <div class="content" itemprop="description">
+                    <p>Laravel&#39;s <strong>Support</strong> package offers a lot of cool stuff to use in any project, let check them out one at a time.<br>
+I&#39;ll start with my favourite feature that I really like much more than anything else, and that is the helper functions provided by <code>illuminate\support</code>.</p>
+
+<h3>Helpers</h3>
+
+<p>There are so many helper functions included in support package and I can&#39;t convince you more so as to why you should use them.</p>
+
+<p>A plethora of array helper functions included in package will make your life so damn easy when it comes to working with arrays. Best thing about those functions is that they offers you a great way to operate on arrays using dot notations, this feels so natural, and in harmony with object oriented codes, that you can just not resist yourself.<br>
+Naturally, <code>$name = array_get($user, &#39;name.first&#39;)</code> is much elegant solution than <code>$name = $user[&#39;name&#39;][&#39;first&#39;]</code> and there are many other functions like this, including:</p>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="nx">array_add</span><span class="p">(</span><span class="nv">$user</span><span class="p">,</span> <span class="s1">&#39;name.last&#39;</span><span class="p">,</span> <span class="s1">&#39;Gufran&#39;</span><span class="p">);</span>
+<span class="nx">array_pluck</span><span class="p">(</span><span class="nv">$users</span><span class="p">,</span> <span class="s1">&#39;name.first&#39;</span><span class="p">);</span>
+<span class="nx">array_sort</span><span class="p">(</span><span class="nv">$user</span><span class="p">,</span> <span class="nv">$callback</span><span class="p">);</span>
+</code></pre></div>
+<p>and many others.<br>
+Those functions are specially useful to dynamically access the elements from deep inside an array. Imagine writing yourself </p>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="nv">$secondaryCompany</span> <span class="o">=</span> <span class="nv">$records</span><span class="p">[</span><span class="nv">$recordId</span><span class="p">][</span><span class="nv">$userId</span><span class="p">][</span><span class="nv">$companyId</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">];</span>
+</code></pre></div>
+<p>and once you recover from the nightmare, also imagine writing </p>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="nv">$keyString</span> <span class="o">=</span> <span class="nv">$recordId</span> <span class="o">.</span> <span class="nv">$userId</span> <span class="o">.</span> <span class="nv">$companyId</span><span class="p">;</span>
+<span class="nv">$secondaryCompany</span> <span class="o">=</span> <span class="nx">array_get</span><span class="p">(</span><span class="nv">$records</span><span class="p">,</span> <span class="nv">$keyString</span><span class="p">);</span>
+</code></pre></div>
+<p>Pretty nifty, heh!</p>
+
+<p>You can find a full list and proper documentations for those functions on <a href="http://laravel.com/docs/helpers#arrays">official Laravel documentation page</a></p>
+
+<p>Other functions provided by support package are string helpers. Here is an example of some of them but you should definitely check out the full documentation.</p>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="nx">str_contains</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">,</span> <span class="s1">&#39;World&#39;</span><span class="p">);</span>
+<span class="nx">str_is</span><span class="p">(</span><span class="s1">&#39;Hello&#39;</span><span class="p">,</span> <span class="s1">&#39;Hello&#39;</span><span class="p">);</span>
+<span class="nx">snake_case</span><span class="p">(</span><span class="s1">&#39;MainClassName&#39;</span><span class="p">);</span>
+<span class="nx">studly_case</span><span class="p">(</span><span class="s1">&#39;converts_from_snake_case&#39;</span><span class="p">);</span>
+<span class="nx">camel_case</span><span class="p">(</span><span class="s1">&#39;converts_from_snake_or_studly_case&#39;</span><span class="p">);</span>
+<span class="sb">```php</span>
+
+<span class="sb">You can find complete documentation about those helper functions on [official Laravel documentation page](http://laravel.com/docs/helpers#strings)</span>
+
+<span class="sb">Second in my favourites list is __Fluent__ class. </span>
+<span class="sb">### Fluent</span>
+<span class="sb">This is not the _Fluent Query Builder_ class, this is something much more exciting than query builder.  </span>
+<span class="sb">If you have been programming in any language for long enough you might have already discovered by now that arrays (and similar types) are one of the most used features in your codes. How about making those traditional PHP arrays a little more interesting to work with ?  </span>
+<span class="sb">Well, Fluent class does just that. This class implements `</span><span class="nx">ArrayAccess</span><span class="sb">` interface which allows you to use the object of `</span><span class="nx">Fluent</span><span class="sb">` class as an array itself. What&#39;s more ? You now have simple _getter_ and _setter_ methods available to manipulate the array. Take a look at this:</span>
+
+<span class="sb">```</span><span class="nx">php</span>
+<span class="nv">$userRecord</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;first_name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Mohammad&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;last_name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Gufran&#39;</span>
+<span class="p">);</span>
+<span class="nv">$record</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Fluent</span><span class="p">(</span><span class="nv">$userRecord</span><span class="p">);</span>
+
+<span class="nv">$record</span><span class="o">-&gt;</span><span class="na">address</span><span class="p">(</span><span class="s1">&#39;hometown, street, house&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nv">$record</span><span class="o">-&gt;</span><span class="na">address</span><span class="p">;</span>
+<span class="sb">```php</span>
+
+<span class="sb">as well as </span>
+
+<span class="sb">```</span><span class="nx">php</span>
+<span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;address&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;hometown, street, house&#39;</span><span class="p">;</span>
+<span class="k">echo</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;first_name&#39;</span><span class="p">];</span>
+<span class="sb">```php</span>
+
+<span class="sb">So, that is just PHP arrays with lipstick. This is not the most revolutionary invention ever but yeah, it does make your codes look much more object oriented.</span>
+
+<span class="sb">Next in the line is Collection class.</span>
+
+<span class="sb">### Collection</span>
+<span class="sb">Think of collections as an upgrade to `</span><span class="nx">Fluent</span><span class="sb">` class. If you didn&#39;t noticed yet the `</span><span class="nx">Fluent</span><span class="sb">` class is limited in many ways, It can operate &#39;Fluently&#39; on single dimensional arrays only. `</span><span class="nx">Collection</span><span class="sb">` class removes all those limitations, so basically _Collection is PHP arrays on steroids_.</span>
+
+<span class="sb">Lets get this straight, Collection is Object Oriented PHP Arrays. It doesn&#39;t bring anything new to the table except the Object Oriented Interface to work with ugly looking PHP arrays. You know PHP faces all kind of criticism for it&#39;s inconsistent functions and features, take array functions for example, if you want to filter an array you have function `</span><span class="nb">array_filter</span><span class="sb">` at your disposal. Syntax for `</span><span class="nb">array_filter</span><span class="sb">` is</span>
+
+<span class="sb">```</span><span class="nx">php</span>
+<span class="nb">array_filter</span><span class="p">(</span><span class="nv">$array</span><span class="p">,</span> <span class="nv">$callback</span><span class="p">);</span>
+</code></pre></div>
+<p>which is all good for as long as you don&#39;t stumble across <code>array_map</code> function. Syntax for <code>array_map</code> is </p>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="nb">array_map</span><span class="p">(</span><span class="nv">$callback</span><span class="p">,</span> <span class="nv">$array</span><span class="p">);</span>
+</code></pre></div>
+<p>which is sort of inconsistent. There is a reason to why the argument list is inverted in <code>array_map</code> functions, it can take more than one array like <code>array_map($callback, $array1, $array2, $array3)</code> and apply callback on each of them. And if you supply the array at first and callback at second place then you would not be able to pass more than one array to it. This is one sensible reason but this is inconsistent nonetheless.<br>
+Collection class make all array functions available as a method on Collection object - <em>in a consistent manner.</em></p>
+
+<p>Take this for example</p>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="nv">$collection</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Collection</span><span class="p">(</span><span class="nv">$records</span><span class="p">);</span>
+
+<span class="nv">$collection</span><span class="o">-&gt;</span><span class="na">implode</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">);</span>
+<span class="nv">$collection</span><span class="o">-&gt;</span><span class="na">first</span><span class="p">();</span>
+<span class="nv">$collection</span><span class="o">-&gt;</span><span class="na">last</span><span class="p">();</span>
+<span class="nv">$collection</span><span class="o">-&gt;</span><span class="na">lists</span><span class="p">(</span><span class="s1">&#39;first_name&#39;</span><span class="p">);</span> <span class="c1">// gives you an array of all first names</span>
+<span class="nv">$collection</span><span class="o">-&gt;</span><span class="na">map</span><span class="p">(</span><span class="nv">$callback</span><span class="p">);</span>
+<span class="nv">$collection</span><span class="o">-&gt;</span><span class="na">filter</span><span class="p">(</span><span class="nv">$callback</span><span class="p">);</span>
+<span class="c1">// ... and a lot more methods</span>
+</code></pre></div>
+<p>Oh, and of course you are free to use the object as array since it implements <code>ArrayAccess</code>, <code>ArrayIterator</code> and <code>IteratorAggregate</code> interfaces. So you can do pretty much anything that can be done with a traditional PHP array. things like</p>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="k">foreach</span><span class="p">(</span><span class="nv">$collection</span> <span class="k">as</span> <span class="nv">$element</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">//... get cozy here</span>
+<span class="p">}</span>
+
+<span class="nv">$collection</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Gufran&#39;</span><span class="p">;</span>
+<span class="k">echo</span> <span class="nv">$collection</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">];</span>
+</code></pre></div>
+<p>Laravel documentations does not cover Collection class but this is something you can (and should) explore yourself, just open up the <code>Illuminate\Support\Collection</code> class in your IDE.<br>
+Also, Jeffrey has covered the Collection class in this <a href="https://laracasts.com/lessons/arrays-on-steroids">Laracast here</a>. I highly recommend that you go ahead and watch it.</p>
+
+<p>Moving on, the next part is the ClassLoader class</p>
+
+<h3>ClassLoader</h3>
+
+<p>The <code>ClassLoader</code> class is a simple utility you want to have right besides <em>composer autoloader</em>. There are situations when composer autoloading is an overkill or you simply don&#39;t want to leverage composer autoloading due to packaging problems, in such a case you can register the <code>ClassLoader</code> class to load classes from directories you specify.<br>
+You can register the class to manage autoloading by <code>ClassLoader::register()</code> method. At the top your index file, right after including the <code>vendor/autoload.php</code> file, call the method <code>ClassLoader::register()</code> like this</p>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="k">include</span> <span class="s1">&#39;vendor/autoload.php&#39;</span><span class="p">;</span>
+<span class="nx">\Illuminate\Support\ClassLoader</span><span class="o">::</span><span class="na">register</span><span class="p">();</span>
+</code></pre></div>
+<p>After that you can add the directories you wish to autoload the classes from. So if I have directories <code>Controllers</code>, <code>Models</code>, and <code>Libraries</code> in my app directory I&#39;d add them like this:</p>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="nv">$dirPaths</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+    <span class="nv">$controllersDir</span><span class="p">,</span>
+    <span class="nv">$modelsDir</span><span class="p">,</span>
+    <span class="nv">$librariesDir</span>
+<span class="p">);</span>
+
+<span class="nx">\Illuminate\Support\ClassLoader</span><span class="o">::</span><span class="na">addDirectories</span><span class="p">()</span>
+</code></pre></div>
+<p>And this is pretty much all to the <code>ClassLoader</code> class. You can now place all class file into respective directories and have them autoloaded without worrying about <code>composer</code>. ClassLoader class expects <strong>PSR-4</strong> namespacing scheme so make sure the directory structure matches the namespace.</p>
+
+<h2>Wrapping up</h2>
+
+<p>Finally, there are 2 more classes I wish to highlight, and those are <code>Pluralizer</code> and <code>Str</code>.<br>
+Pluralizer class is pretty simple. It provides methods <code>Pluralizer::plural()</code> and <code>Pluralizer::singular()</code> which converts between singular and plural forms of a word.</p>
+
+<p><code>Str</code> class is a relatively big and provides a lot of methods to operate on strings. You can do things like converting between cases, comparing strings, finding substrings and a lot more. Here is an example:</p>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="nx">Str</span><span class="o">::</span><span class="na">is</span><span class="p">(</span><span class="s1">&#39;Hello&#39;</span><span class="p">,</span> <span class="s1">&#39;Hello&#39;</span><span class="p">);</span>         <span class="c1">// Compare strings</span>
+<span class="nx">Str</span><span class="o">::</span><span class="na">is</span><span class="p">(</span><span class="s1">&#39;/there/i&#39;</span><span class="p">,</span> <span class="s1">&#39;There&#39;</span><span class="p">);</span>      <span class="c1">// Compare against a regex</span>
+<span class="nx">Str</span><span class="o">::</span><span class="na">startsWith</span><span class="p">(</span><span class="s1">&#39;Hello world&#39;</span><span class="p">,</span> <span class="s1">&#39;Hell&#39;</span><span class="p">);</span>
+<span class="nx">Str</span><span class="o">::</span><span class="na">endsWith</span><span class="p">(</span><span class="s1">&#39;Hello world&#39;</span><span class="p">,</span> <span class="s1">&#39;rld&#39;</span><span class="p">);</span>
+<span class="nx">Str</span><span class="o">::</span><span class="na">contains</span><span class="p">(</span><span class="s1">&#39;Hello world&#39;</span><span class="p">,</span> <span class="s1">&#39;lo wo&#39;</span><span class="p">);</span>
+<span class="nx">Str</span><span class="o">::</span><span class="na">length</span><span class="p">(</span><span class="s1">&#39;this string is 33 characters long&#39;</span><span class="p">);</span>
+<span class="nx">Str</span><span class="o">::</span><span class="na">limit</span><span class="p">(</span><span class="nv">$longString</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>     <span class="c1">// Limit to 100 characters</span>
+<span class="nx">Str</span><span class="o">::</span><span class="na">words</span><span class="p">(</span><span class="nv">$longString</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>      <span class="c1">// Limit to 20 words</span>
+</code></pre></div>
+<p>This is not everything to <code>Str</code> class, if you wish to find out more about methods available to <code>Str</code> then make sure you go through the codes yourself, the file is located at <code>\Illuminate\Support\ClassLoader</code>.</p>
+
+<p>Have fun browsing through codes until the next blog post, which, hopefully, will be much more interesting and advanced.</p>
+
+                </div> 
+            </div>
+            <div class="post-tags">
+                <i class="icon-tags"></i>
+                
+                <a class="tag_list_link" href="http://www.gufran.me/tag/Laravel">Laravel</a>
+                <span class="seperator">|</span>
+                
+                <a class="tag_list_link" href="http://www.gufran.me/tag/Module">Module</a>
+                <span class="seperator">|</span>
+                
+                <a class="tag_list_link" href="http://www.gufran.me/tag/Tips">Tips</a>
+                <span class="seperator">|</span>
+                
+            </div>
+            <ul class="post-socials">
+                <li><a href="https://www.facebook.com/sharer/sharer.php?u=http://www.gufran.me/post/laravel-illuminate-support-package-introduction&t=Laravel Illuminate Support Package Introduction" target="_blank"><i class="icon-facebook"></i></a></li>
+                <li><a href="https://twitter.com/intent/tweet?original_referer=http://www.gufran.me/post/laravel-illuminate-support-package-introduction&text=Laravel Illuminate Support Package Introduction&url=http://www.gufran.me/post/laravel-illuminate-support-package-introduction" target="_blank"><i class="icon-twitter"></i></a></li>
+                <li><a href="https://plus.google.com/share?url=http://www.gufran.me/post/laravel-illuminate-support-package-introduction" target="_blank"><i class="icon-google-plus"></i></a></li>
+            </ul>
+            <div id="disqus_thread" itemprop="comment"></div>
+            <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments.</a></noscript>
+        </div>
+    </div>
+    <div id="blog-pagination">
+        <ul>
+        	 
+            <li class="prev"><a href="http://www.gufran.me/post/optimizing-laravel-and-wardrobe-cms"><i class="icon-arrow-left"></i><span>Prev</span></a></li>
+            
+             
+            <li class="separator"></li>
+            
+             
+            <li class="next"><a href="http://www.gufran.me/post/laravel-illuminate-router-package-in-your-application"><span>Next</span><i class="icon-arrow-right"></i></a></li>
+            
+        </ul>
+    </div>
+</div>
+<script>
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//gufran-me.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+ </div>
+       <footer>
+        <div class="author">
+          <div class="container">
+            <div class="row" itemscope itemprop="author" itemtype="http://schema.org/Person">
+              <div class="col-md-4 col-sm-3 hidden-xs">
+                <img class="avatar" itemprop="image" src="http://www.gravatar.com/avatar/61a886b6d8b8e349a0ad8624992bc716?s=500" alt="Gufran">
+              </div>
+              <div class="col-md-8 col-sm-9">
+                <p><em>Hi, there!</em> My name is <span itemprop="name">Mohammad Gufran</span>.</p>
+                <p itemprop="description">I am a <span itemprop="jobTitle">programmer</span> who create things for web. Most of my time is spent in front of my computer browsing the web and writing codes for next cool project. I am a lifelong learner.<br/>You can contact me using email or send me a tweet.</p>
+                <div class="row" role="contentinfo">
+                  <div class="col-md-3 col-sm-3 social-button">
+                    <a class="author-link" rel="author" href="http://github.com/Gufran" target="_blank">
+                      <i class="icon-github"></i> github
+                    </a>
+                  </div>
+                  <div class="col-md-3 col-sm-3 social-button">
+                    <a class="author-link" rel="author" href="http://twitter.com/freatbeater" target="_blank">
+                      <i class="icon-twitter"></i> twitter
+                    </a>
+                  </div>
+                  <div class="col-md-3 col-sm-3 social-button">
+                    <a class="author-link" rel="author" href="http://plus.google.com/+GufranKhan24" target="_blank">
+                      <i class="icon-google-plus"></i> google+
+                    </a>
+                  </div>
+                  <div class="col-md-3 col-sm-3 social-button">
+                    <a class="author-link contact-link" href="#" target="_blank">
+                      <i class="icon-mail"></i> contact
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="bottom">
+            <div class="container">
+                <div id="copyright">All content, unless specified otherwise,  is available under <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Common License with Attribution and Share Alike</a></div>
+            </div>
+        </div>   
+       </footer> 
+       <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+       <script type="text/javascript" src="http://www.gufran.me/js/custom.280920140312.js"></script>   
+    </body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-46671921-1', 'gufran.me');
+  ga('require', 'displayfeatures');
+  ga('send', 'pageview');
+</script>
+</html>

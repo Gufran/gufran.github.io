@@ -1,0 +1,235 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="Personal Blog Of Gufran | Using Laravel Illuminate Config Package Outside Laravel">
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="google-site-verification" content="jVNul_ZvsOPuGmV4Y85HMquZOpo8z0nH4ViodkMePpY">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="twitter:site" content="@freatbeater">
+        <meta name="twitter:creator" content="@freatbeater">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Blag Of A Programmer">
+        <meta name="generator" content="Hodor">
+        <link rel="canonical" href="http://www.gufran.me" />
+
+        <title>Using Laravel Illuminate Config Package Outside Laravel</title>
+
+        <script src="//use.typekit.net/mnk2fni.js"></script>
+        <script>try{Typekit.load();}catch(e){}</script>
+        
+        <link rel="stylesheet" href="http://www.gufran.me/css/build/style.280920140312.css">
+
+    </head>
+    <body>
+        <header id="mobile-header" class="visible-xs">
+            <a id="home" href="http://www.gufran.me">
+                <i class="icon-home"></i> Home
+            </a>
+            <label for="menu-button-check" class="nav-menu-button">
+                <span></span>
+                <span class="mid"></span>
+                <span></span>
+            </label>
+        </header>
+        <input type="checkbox" id="menu-button-check" class="hidden">
+        <header id="main-header">
+            <ul id="nav">
+                <li class=" hidden-xs">
+                    <a href="http://www.gufran.me">
+                        <i class="icon-home"></i> Home
+                    </a>
+                </li>
+                <li class="">
+                    <a href="http://www.gufran.me/tags/">
+                        <i class="icon-tags"></i> Tags
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="contact-link" id="contact-section" target="_blank">
+                        <i class="icon-mail"></i> Contact
+                    </a>
+                </li>
+                <li>
+                    <a href="http://github.com/Gufran" target="_blank">
+                        <i class="icon-github"></i> Github
+                    </a>
+                </li>
+                <li>
+                    <a href="http://twitter.com/freatbeater" target="_blank">
+                        <i class="icon-twitter"></i> Twitter
+                    </a>
+                </li>
+            </ul>
+        </header>
+        <div id="main-contents">
+<div class="single-post">
+    <div class="container">
+        <div class="post-item" itemscope itemtype="http://schema.org/BlogPosting" role="article">
+            <div class="post-header">
+                <div class="blog-no-header"></div>
+            </div>
+            <div class="post-body">
+                <div class="meta">
+                    <i class="icon-date"></i> 
+                    <time itemprop="datePublished" datetime="09 May 2014" class="date">
+                        09 May 2014
+                    </time>
+                </div>
+                <h2 class="title" itemprop="name">Using Laravel Illuminate Config Package Outside Laravel</h2>
+                <div class="content" itemprop="description">
+                    <p>Moving on with <em>Illuminate</em>, next in the series is <code>illuminate/config</code> package.<br>
+In this article we&#39;ll go through the <strong>config</strong> package which Laravel use to parse all those configuration files you see in <code>app/config</code> directory.</p>
+
+<p>Lets start with an empty directory or <a href="#tldr">just skip to the TL;DR version</a>. I start with running <code>composer init</code> and then requiring the config package:</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">composer init
+<span class="c"># snip...</span>
+composer require illuminate/config 4.1.*
+</code></pre></div>
+<p>This will bring in the Config package and all its dependencies for us. At this point you can also create a directory to hold our configuration files, I create a directory <code>config</code> in project root and also created a file named <code>app.php</code> in it. This is the content of my <code>config/app.php</code> file. </p>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="k">return</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Gufran&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Geek&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;job&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Messing up with computers&#39;</span>
+<span class="p">);</span>
+</code></pre></div>
+<p>Now, as always, you need to create an index file and require the <code>vendor/autoload.php</code> and <code>vendor/illuminate/support/Illuminate/Support/helpers.php</code> file.</p>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="k">require</span> <span class="s1">&#39;vendor/autoload.php&#39;</span><span class="p">;</span>
+<span class="k">require</span> <span class="s1">&#39;vendor/illuminate/support/Illuminate/Support/helpers.php&#39;</span><span class="p">;</span>
+</code></pre></div>
+<p>then you need to set up some path variables, including the path to configuration directory</p>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="nv">$basePath</span> <span class="o">=</span> <span class="nx">str_finish</span><span class="p">(</span><span class="nb">dirname</span><span class="p">(</span><span class="k">__FILE__</span><span class="p">),</span> <span class="s1">&#39;/&#39;</span><span class="p">);</span>
+<span class="nv">$configPath</span> <span class="o">=</span> <span class="nv">$basePath</span> <span class="o">.</span> <span class="s1">&#39;config&#39;</span><span class="p">;</span>
+</code></pre></div>
+<p>Now, before moving on a quick lecture about <code>Config</code> facade you regularly use in a typical Laravel installation.<br>
+<code>Config</code> facade maps to <code>Illuminate\Config\Repository</code> class which is responsible to fetch and resolve all configuration arrays, you can also include sub-directories in <code>config</code> directory which will be preferred based on application environment.</p>
+
+<p>In order to initialise the config repository we first need to initialise the <code>Illuminate\Config\FileLoader</code> class which expects an instance of <code>Illuminate\Filesystem</code> and path to configuration directory:</p>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="nv">$filesystem</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Illuminate\Filesystem\Filesystem</span><span class="p">;</span>
+<span class="nv">$loader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Illuminate\Config\FileLoader</span><span class="p">(</span><span class="nv">$filesystem</span><span class="p">,</span> <span class="nv">$configPath</span><span class="p">);</span>
+</code></pre></div>
+<p>Now we can create a config repository with this <code>FileLoader</code> instance. <code>Illuminate\Config\Repository</code> expects an instance of <code>FileLoader</code> and current application environment as a second constructor argument. This second argument - the environment - determines the configuration file to load. Default environment should be <strong>production</strong> which means you wish to load default configuration, however, if you wish to load configuration for a different environment then make sure you have respective files in place under <code>config/&lt;environment&gt;/</code> directory. We initialise the repository...</p>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="nv">$config</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Illuminate\Config\Repository</span><span class="p">(</span><span class="nv">$loader</span><span class="p">,</span> <span class="s1">&#39;production&#39;</span><span class="p">);</span>
+</code></pre></div>
+<p>... and we are done.</p>
+
+<p>Now you can use <code>$config</code> variable to access configuration data as usual.</p>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="nv">$name</span> <span class="o">=</span> <span class="nv">$config</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;app.name&#39;</span><span class="p">);</span> <span class="c1">// Gufran</span>
+<span class="nv">$type</span> <span class="o">=</span> <span class="nv">$config</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;app.type&#39;</span><span class="p">);</span> <span class="c1">// Geek</span>
+</code></pre></div>
+<h3><a name="tldr"></a>Finally, here is the TL;DR version</h3>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="k">require</span> <span class="s1">&#39;vendor/autoload.php&#39;</span><span class="p">;</span>
+<span class="k">require</span> <span class="s1">&#39;vendor/illuminate/support/Illuminate/Support/helpers.php&#39;</span><span class="p">;</span>
+
+<span class="nv">$basePath</span> <span class="o">=</span> <span class="nx">str_finish</span><span class="p">(</span><span class="nb">dirname</span><span class="p">(</span><span class="k">__FILE__</span><span class="p">),</span> <span class="s1">&#39;/&#39;</span><span class="p">);</span>
+<span class="nv">$configPath</span> <span class="o">=</span> <span class="nv">$basePath</span> <span class="o">.</span> <span class="s1">&#39;config&#39;</span><span class="p">;</span>
+
+<span class="nv">$loader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Illuminate\Config\FileLoader</span><span class="p">(</span><span class="k">new</span> <span class="nx">Illuminate\Filesystem\Filesystem</span><span class="p">,</span> <span class="nv">$configPath</span><span class="p">);</span>
+<span class="nv">$config</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Illuminate\Config\Repository</span><span class="p">(</span><span class="nv">$loader</span><span class="p">,</span> <span class="s1">&#39;production&#39;</span><span class="p">);</span>
+
+<span class="k">echo</span> <span class="nv">$config</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;app.name&#39;</span><span class="p">);</span>
+</code></pre></div>
+<p>I hope you&#39;ll find good use of config package outside laravel, let me know what do you think about it in comments below.</p>
+
+                </div> 
+            </div>
+            <div class="post-tags">
+                <i class="icon-tags"></i>
+                
+                <a class="tag_list_link" href="http://www.gufran.me/tag/Laravel">Laravel</a>
+                <span class="seperator">|</span>
+                
+                <a class="tag_list_link" href="http://www.gufran.me/tag/Module">Module</a>
+                <span class="seperator">|</span>
+                
+                <a class="tag_list_link" href="http://www.gufran.me/tag/Tips">Tips</a>
+                <span class="seperator">|</span>
+                
+            </div>
+            <ul class="post-socials">
+                <li><a href="https://www.facebook.com/sharer/sharer.php?u=http://www.gufran.me/post/using-laravel-illuminate-config-package-outside-laravel&t=Using Laravel Illuminate Config Package Outside Laravel" target="_blank"><i class="icon-facebook"></i></a></li>
+                <li><a href="https://twitter.com/intent/tweet?original_referer=http://www.gufran.me/post/using-laravel-illuminate-config-package-outside-laravel&text=Using Laravel Illuminate Config Package Outside Laravel&url=http://www.gufran.me/post/using-laravel-illuminate-config-package-outside-laravel" target="_blank"><i class="icon-twitter"></i></a></li>
+                <li><a href="https://plus.google.com/share?url=http://www.gufran.me/post/using-laravel-illuminate-config-package-outside-laravel" target="_blank"><i class="icon-google-plus"></i></a></li>
+            </ul>
+            <div id="disqus_thread" itemprop="comment"></div>
+            <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments.</a></noscript>
+        </div>
+    </div>
+    <div id="blog-pagination">
+        <ul>
+        	 
+            <li class="prev"><a href="http://www.gufran.me/post/laravel-illuminate-router-package-in-your-application"><i class="icon-arrow-left"></i><span>Prev</span></a></li>
+            
+             
+            <li class="separator"></li>
+            
+             
+            <li class="next"><a href="http://www.gufran.me/post/local-dns-server-with-vagrant-homestead"><span>Next</span><i class="icon-arrow-right"></i></a></li>
+            
+        </ul>
+    </div>
+</div>
+<script>
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//gufran-me.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+ </div>
+       <footer>
+        <div class="author">
+          <div class="container">
+            <div class="row" itemscope itemprop="author" itemtype="http://schema.org/Person">
+              <div class="col-md-4 col-sm-3 hidden-xs">
+                <img class="avatar" itemprop="image" src="http://www.gravatar.com/avatar/61a886b6d8b8e349a0ad8624992bc716?s=500" alt="Gufran">
+              </div>
+              <div class="col-md-8 col-sm-9">
+                <p><em>Hi, there!</em> My name is <span itemprop="name">Mohammad Gufran</span>.</p>
+                <p itemprop="description">I am a <span itemprop="jobTitle">programmer</span> who create things for web. Most of my time is spent in front of my computer browsing the web and writing codes for next cool project. I am a lifelong learner.<br/>You can contact me using email or send me a tweet.</p>
+                <div class="row" role="contentinfo">
+                  <div class="col-md-3 col-sm-3 social-button">
+                    <a class="author-link" rel="author" href="http://github.com/Gufran" target="_blank">
+                      <i class="icon-github"></i> github
+                    </a>
+                  </div>
+                  <div class="col-md-3 col-sm-3 social-button">
+                    <a class="author-link" rel="author" href="http://twitter.com/freatbeater" target="_blank">
+                      <i class="icon-twitter"></i> twitter
+                    </a>
+                  </div>
+                  <div class="col-md-3 col-sm-3 social-button">
+                    <a class="author-link" rel="author" href="http://plus.google.com/+GufranKhan24" target="_blank">
+                      <i class="icon-google-plus"></i> google+
+                    </a>
+                  </div>
+                  <div class="col-md-3 col-sm-3 social-button">
+                    <a class="author-link contact-link" href="#" target="_blank">
+                      <i class="icon-mail"></i> contact
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="bottom">
+            <div class="container">
+                <div id="copyright">All content, unless specified otherwise,  is available under <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Common License with Attribution and Share Alike</a></div>
+            </div>
+        </div>   
+       </footer> 
+       <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+       <script type="text/javascript" src="http://www.gufran.me/js/custom.280920140312.js"></script>   
+    </body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-46671921-1', 'gufran.me');
+  ga('require', 'displayfeatures');
+  ga('send', 'pageview');
+</script>
+</html>

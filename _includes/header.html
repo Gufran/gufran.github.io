@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="Personal Blog Of Gufran | {{ page.title }}">
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="google-site-verification" content="jVNul_ZvsOPuGmV4Y85HMquZOpo8z0nH4ViodkMePpY">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="twitter:site" content="@freatbeater">
+        <meta name="twitter:creator" content="@freatbeater">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Blag Of A Programmer">
+        <meta name="generator" content="Hodor">
+        <link rel="canonical" href="{{site.url}}" />
+
+        <title>{{ page.title }}</title>
+
+        <script src="//use.typekit.net/mnk2fni.js"></script>
+        <script>try{Typekit.load();}catch(e){}</script>
+        
+        <link rel="stylesheet" href="{{site.url}}/css/build/style.{{site.version}}.css">
+
+    </head>
+    <body>
+        <header id="mobile-header" class="visible-xs">
+            <a id="home" href="{{site.url}}">
+                <i class="icon-home"></i> Home
+            </a>
+            <label for="menu-button-check" class="nav-menu-button">
+                <span></span>
+                <span class="mid"></span>
+                <span></span>
+            </label>
+        </header>
+        <input type="checkbox" id="menu-button-check" class="hidden">
+        <header id="main-header">
+            <ul id="nav">
+                <li class="{% if page.url == '/' %}active{% endif %} hidden-xs">
+                    <a href="{{site.url}}">
+                        <i class="icon-home"></i> Home
+                    </a>
+                </li>
+                <li class="{% if page.url == '/tags/' %}active{% endif %}">
+                    <a href="{{site.url}}/tags/">
+                        <i class="icon-tags"></i> Tags
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="contact-link" id="contact-section" target="_blank">
+                        <i class="icon-mail"></i> Contact
+                    </a>
+                </li>
+                <li>
+                    <a href="http://github.com/{{site.user.github}}" target="_blank">
+                        <i class="icon-github"></i> Github
+                    </a>
+                </li>
+                <li>
+                    <a href="http://twitter.com/{{site.user.twitter}}" target="_blank">
+                        <i class="icon-twitter"></i> Twitter
+                    </a>
+                </li>
+            </ul>
+        </header>
+        <div id="main-contents">
