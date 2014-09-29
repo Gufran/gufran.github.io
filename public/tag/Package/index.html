@@ -16,15 +16,21 @@
 
         <title>Posts Tagged &ldquo;Package&rdquo;</title>
 
-        <script src="//use.typekit.net/mnk2fni.js"></script>
-        <script>try{Typekit.load();}catch(e){}</script>
-        
-        <link rel="stylesheet" href="http://www.gufran.me/css/build/style.280920140312.css">
+        <link rel="stylesheet" href="/css/build/style.280920140312.css">
 
+        <script>
+          (function(d) {
+            var config = {
+              kitId: 'mnk2fni',
+              scriptTimeout: 3000
+            },
+            h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+          })(document);
+        </script>
     </head>
     <body>
         <header id="mobile-header" class="visible-xs">
-            <a id="home" href="http://www.gufran.me">
+            <a id="home" href="/">
                 <i class="icon-home"></i> Home
             </a>
             <label for="menu-button-check" class="nav-menu-button">
@@ -37,12 +43,12 @@
         <header id="main-header">
             <ul id="nav">
                 <li class=" hidden-xs">
-                    <a href="http://www.gufran.me">
+                    <a href="">
                         <i class="icon-home"></i> Home
                     </a>
                 </li>
                 <li class="">
-                    <a href="http://www.gufran.me/tags/">
+                    <a href="/tags/">
                         <i class="icon-tags"></i> Tags
                     </a>
                 </li>
@@ -239,7 +245,7 @@
         </div>   
        </footer> 
        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-       <script type="text/javascript" src="http://www.gufran.me/js/custom.280920140312.js"></script>   
+       <script type="text/javascript" src="/js/custom.280920140312.js"></script>   
     </body>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

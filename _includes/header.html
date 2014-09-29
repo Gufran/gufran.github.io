@@ -16,15 +16,21 @@
 
         <title>{{ page.title }}</title>
 
-        <script src="//use.typekit.net/mnk2fni.js"></script>
-        <script>try{Typekit.load();}catch(e){}</script>
-        
-        <link rel="stylesheet" href="{{site.url}}/css/build/style.{{site.version}}.css">
+        <link rel="stylesheet" href="/css/build/style.{{site.version}}.css">
 
+        <script>
+          (function(d) {
+            var config = {
+              kitId: 'mnk2fni',
+              scriptTimeout: 3000
+            },
+            h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+          })(document);
+        </script>
     </head>
     <body>
         <header id="mobile-header" class="visible-xs">
-            <a id="home" href="{{site.url}}">
+            <a id="home" href="/">
                 <i class="icon-home"></i> Home
             </a>
             <label for="menu-button-check" class="nav-menu-button">
@@ -37,12 +43,12 @@
         <header id="main-header">
             <ul id="nav">
                 <li class="{% if page.url == '/' %}active{% endif %} hidden-xs">
-                    <a href="{{site.url}}">
+                    <a href="">
                         <i class="icon-home"></i> Home
                     </a>
                 </li>
                 <li class="{% if page.url == '/tags/' %}active{% endif %}">
-                    <a href="{{site.url}}/tags/">
+                    <a href="/tags/">
                         <i class="icon-tags"></i> Tags
                     </a>
                 </li>
