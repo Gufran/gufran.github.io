@@ -57,13 +57,13 @@ title: Blag Of A Programmer
     <div id="blog-pagination">
         <ul>
             {% if paginator.previous_page %} 
-            <li class="prev"><a href="{{paginator.previous_page_path}}"><i class="icon-arrow-left"></i><span>Prev</span></a></li>
+            <li class="prev"><a href="{{site.url}}{{paginator.previous_page_path}}"><i class="icon-arrow-left"></i><span>Prev</span></a></li>
             {% endif %}
             {% if paginator.previous_page or paginator.next_page%} 
             <li class="separator"></li>
             {% endif %}
              {% if paginator.next_page %}
-            <li class="next"><a href="{{paginator.next_page_path}}"><span>Next</span><i class="icon-arrow-right"></i></a></li>
+            <li class="next"><a href="{{site.url}}{{paginator.next_page_path}}"><span>Next</span><i class="icon-arrow-right"></i></a></li>
             {% endif %}
         </ul>
     </div>
