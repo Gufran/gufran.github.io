@@ -116,18 +116,17 @@ Those functions are specially useful to dynamically access the elements from dee
 <span class="nx">snake_case</span><span class="p">(</span><span class="s1">&#39;MainClassName&#39;</span><span class="p">);</span>
 <span class="nx">studly_case</span><span class="p">(</span><span class="s1">&#39;converts_from_snake_case&#39;</span><span class="p">);</span>
 <span class="nx">camel_case</span><span class="p">(</span><span class="s1">&#39;converts_from_snake_or_studly_case&#39;</span><span class="p">);</span>
-<span class="sb">```php</span>
+</code></pre></div>
+<p>You can find complete documentation about those helper functions on <a href="http://laravel.com/docs/helpers#strings">official Laravel documentation page</a></p>
 
-<span class="sb">You can find complete documentation about those helper functions on [official Laravel documentation page](http://laravel.com/docs/helpers#strings)</span>
+<p>Second in my favourites list is <strong>Fluent</strong> class. </p>
 
-<span class="sb">Second in my favourites list is __Fluent__ class. </span>
-<span class="sb">### Fluent</span>
-<span class="sb">This is not the _Fluent Query Builder_ class, this is something much more exciting than query builder.  </span>
-<span class="sb">If you have been programming in any language for long enough you might have already discovered by now that arrays (and similar types) are one of the most used features in your codes. How about making those traditional PHP arrays a little more interesting to work with ?  </span>
-<span class="sb">Well, Fluent class does just that. This class implements `</span><span class="nx">ArrayAccess</span><span class="sb">` interface which allows you to use the object of `</span><span class="nx">Fluent</span><span class="sb">` class as an array itself. What&#39;s more ? You now have simple _getter_ and _setter_ methods available to manipulate the array. Take a look at this:</span>
+<h3>Fluent</h3>
 
-<span class="sb">```</span><span class="nx">php</span>
-<span class="nv">$userRecord</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+<p>This is not the <em>Fluent Query Builder</em> class, this is something much more exciting than query builder.<br>
+If you have been programming in any language for long enough you might have already discovered by now that arrays (and similar types) are one of the most used features in your codes. How about making those traditional PHP arrays a little more interesting to work with ?<br>
+Well, Fluent class does just that. This class implements <code>ArrayAccess</code> interface which allows you to use the object of <code>Fluent</code> class as an array itself. What&#39;s more ? You now have simple <em>getter</em> and <em>setter</em> methods available to manipulate the array. Take a look at this:</p>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="nv">$userRecord</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
     <span class="s1">&#39;first_name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Mohammad&#39;</span><span class="p">,</span>
     <span class="s1">&#39;last_name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Gufran&#39;</span>
 <span class="p">);</span>
@@ -135,26 +134,21 @@ Those functions are specially useful to dynamically access the elements from dee
 
 <span class="nv">$record</span><span class="o">-&gt;</span><span class="na">address</span><span class="p">(</span><span class="s1">&#39;hometown, street, house&#39;</span><span class="p">);</span>
 <span class="k">echo</span> <span class="nv">$record</span><span class="o">-&gt;</span><span class="na">address</span><span class="p">;</span>
-<span class="sb">```php</span>
-
-<span class="sb">as well as </span>
-
-<span class="sb">```</span><span class="nx">php</span>
-<span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;address&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;hometown, street, house&#39;</span><span class="p">;</span>
+</code></pre></div>
+<p>as well as </p>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;address&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;hometown, street, house&#39;</span><span class="p">;</span>
 <span class="k">echo</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;first_name&#39;</span><span class="p">];</span>
-<span class="sb">```php</span>
+</code></pre></div>
+<p>So, that is just PHP arrays with lipstick. This is not the most revolutionary invention ever but yeah, it does make your codes look much more object oriented.</p>
 
-<span class="sb">So, that is just PHP arrays with lipstick. This is not the most revolutionary invention ever but yeah, it does make your codes look much more object oriented.</span>
+<p>Next in the line is Collection class.</p>
 
-<span class="sb">Next in the line is Collection class.</span>
+<h3>Collection</h3>
 
-<span class="sb">### Collection</span>
-<span class="sb">Think of collections as an upgrade to `</span><span class="nx">Fluent</span><span class="sb">` class. If you didn&#39;t noticed yet the `</span><span class="nx">Fluent</span><span class="sb">` class is limited in many ways, It can operate &#39;Fluently&#39; on single dimensional arrays only. `</span><span class="nx">Collection</span><span class="sb">` class removes all those limitations, so basically _Collection is PHP arrays on steroids_.</span>
+<p>Think of collections as an upgrade to <code>Fluent</code> class. If you didn&#39;t noticed yet the <code>Fluent</code> class is limited in many ways, It can operate &#39;Fluently&#39; on single dimensional arrays only. <code>Collection</code> class removes all those limitations, so basically <em>Collection is PHP arrays on steroids</em>.</p>
 
-<span class="sb">Lets get this straight, Collection is Object Oriented PHP Arrays. It doesn&#39;t bring anything new to the table except the Object Oriented Interface to work with ugly looking PHP arrays. You know PHP faces all kind of criticism for it&#39;s inconsistent functions and features, take array functions for example, if you want to filter an array you have function `</span><span class="nb">array_filter</span><span class="sb">` at your disposal. Syntax for `</span><span class="nb">array_filter</span><span class="sb">` is</span>
-
-<span class="sb">```</span><span class="nx">php</span>
-<span class="nb">array_filter</span><span class="p">(</span><span class="nv">$array</span><span class="p">,</span> <span class="nv">$callback</span><span class="p">);</span>
+<p>Lets get this straight, Collection is Object Oriented PHP Arrays. It doesn&#39;t bring anything new to the table except the Object Oriented Interface to work with ugly looking PHP arrays. You know PHP faces all kind of criticism for it&#39;s inconsistent functions and features, take array functions for example, if you want to filter an array you have function <code>array_filter</code> at your disposal. Syntax for <code>array_filter</code> is</p>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="nb">array_filter</span><span class="p">(</span><span class="nv">$array</span><span class="p">,</span> <span class="nv">$callback</span><span class="p">);</span>
 </code></pre></div>
 <p>which is all good for as long as you don&#39;t stumble across <code>array_map</code> function. Syntax for <code>array_map</code> is </p>
 <div class="highlight"><pre><code class="language-php" data-lang="php"><span class="nb">array_map</span><span class="p">(</span><span class="nv">$callback</span><span class="p">,</span> <span class="nv">$array</span><span class="p">);</span>

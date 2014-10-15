@@ -57,7 +57,7 @@ str_is('Hello', 'Hello');
 snake_case('MainClassName');
 studly_case('converts_from_snake_case');
 camel_case('converts_from_snake_or_studly_case');
-```php
+```
 
 You can find complete documentation about those helper functions on [official Laravel documentation page](http://laravel.com/docs/helpers#strings)
 
@@ -76,14 +76,14 @@ $record = new Fluent($userRecord);
 
 $record->address('hometown, street, house');
 echo $record->address;
-```php
+```
 
 as well as 
 
 ```php
 $record['address'] = 'hometown, street, house';
 echo $record['first_name'];
-```php
+```
 
 So, that is just PHP arrays with lipstick. This is not the most revolutionary invention ever but yeah, it does make your codes look much more object oriented.
 
