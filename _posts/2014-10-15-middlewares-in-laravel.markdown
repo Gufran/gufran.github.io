@@ -14,8 +14,8 @@ tags:
 Laravel 5 made the guy who has been working behind the curtains for about two years a first class citizen. Lets talk about those Middlewares.
 
 
-Middlewares are not new to Laravel, they were always here and serving the purpose they are created for - its just that you never bothered about them. Not to worry, let me tell you more about them.
-When an HTTP request enters a Laravel App it goes through several layers before reaching the controller and invoking the action it is supposed to invoke, those layers in between are responsible for things like checking Cookie, queuing Cookies, CSRF protection, Authentication check and a couple other things. All these actions are carried out by Middlewares.
+Middlewares are not new to Laravel, they were always here and serving the purpose they are created for - its just that you never bothered about them. Not to worry, let me tell you more about them.  
+When an HTTP request enters a Laravel App it goes through several layers before reaching the controller and invoking the action it is supposed to invoke, those layers in between are responsible for things like checking Cookie, queuing Cookies, CSRF protection, Authentication check and a couple other things. All these actions are carried out by Middlewares.  
 So Middlewares are invoked after the app receives the HTTP request and before the request reaches the controller, that is why they are called Middlewares. Laravel has them since very beginning but until 4.2 they were backstage workers working behind the scene, also there were only a few of them - Encryption/Decryption, Cookie Guard, Cookie Queue and Session Middleware. Now, in version 5 Laravel replaces filters with Middlewares.
 
 So you guessed it, now all the crazy stuff you used to do with filters can be done with Middlewares, and dont worry about it because like everything else in laravel setting up middlewares is just as easy as it could possibly be.
@@ -53,8 +53,8 @@ class AdminGuardMiddleware implements Middleware {
 }
 ```
 
-`handle()` method is where we define the behavior of the middleware.
-So, now you want to guard every route to `/admin/*` and make it accessible only if - say - the request originates from a certain IP address, or it has `X-Role-Admin` header set with some value.
+`handle()` method is where we define the behavior of the middleware.  
+So, now you want to guard every route to `/admin/*` and make it accessible only if - say - the request originates from a certain IP address, or it has `X-Role-Admin` header set with some value.  
 the `handle()` method will receive the `Request` and a closure object `$next` which will send the request to the other middlewares. Now that we have the request object we can check for whatever condition we want.
 
 ```php
@@ -73,10 +73,10 @@ public function handle($request, Closure $next)
 }
 ```
 
-Now that we have a middleware we know will do the job lets register it. All you have to do now is just open up `app/Providers/AppServiceProvider` and if you want to run this middleware on every request then update the `$stack` array or if you want to use it as a filter then do so in `$middleware` array.
+Now that we have a middleware we know will do the job lets register it. All you have to do now is just open up `app/Providers/AppServiceProvider` and if you want to run this middleware on every request then update the `$stack` array or if you want to use it as a filter then do so in `$middleware` array.  
 If you register the middleware as a filter then you can use it in usual way on whatever route or controller you want to. So
 
-``php
+```php
 
 class SomeController extends Controller
 {
