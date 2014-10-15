@@ -1,0 +1,255 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="Personal Blog Of Gufran | Middlewares In Laravel 5">
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="google-site-verification" content="jVNul_ZvsOPuGmV4Y85HMquZOpo8z0nH4ViodkMePpY">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="twitter:site" content="@freatbeater">
+        <meta name="twitter:creator" content="@freatbeater">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Blag Of A Programmer">
+        <meta name="generator" content="Hodor">
+        <link rel="canonical" href="http://www.gufran.me" />
+
+        <title>Middlewares In Laravel 5</title>
+
+        <link rel="stylesheet" href="/css/build/style.201410072054.css">
+
+        <script>
+          (function(d) {
+            var config = {
+              kitId: 'mnk2fni',
+              scriptTimeout: 3000
+            },
+            h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+          })(document);
+        </script>
+    </head>
+    <body>
+        <header id="mobile-header" class="visible-xs">
+            <a id="home" href="http://www.gufran.me">
+                <i class="icon-home"></i> Home
+            </a>
+            <label for="menu-button-check" class="nav-menu-button">
+                <span></span>
+                <span class="mid"></span>
+                <span></span>
+            </label>
+        </header>
+        <input type="checkbox" id="menu-button-check" class="hidden">
+        <header id="main-header">
+            <ul id="nav">
+                <li class=" hidden-xs">
+                    <a href="http://www.gufran.me">
+                        <i class="icon-home"></i> Home
+                    </a>
+                </li>
+                <li class="">
+                    <a href="/tags/">
+                        <i class="icon-tags"></i> Tags
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="contact-link" id="contact-section" target="_blank">
+                        <i class="icon-mail"></i> Contact
+                    </a>
+                </li>
+                <li>
+                    <a href="http://github.com/Gufran" target="_blank">
+                        <i class="icon-github"></i> Github
+                    </a>
+                </li>
+                <li>
+                    <a href="http://twitter.com/freatbeater" target="_blank">
+                        <i class="icon-twitter"></i> Twitter
+                    </a>
+                </li>
+            </ul>
+        </header>
+        <div id="main-contents">
+<div class="single-post">
+    <div class="container">
+        <div class="post-item" itemscope itemtype="http://schema.org/BlogPosting" role="article">
+            <div class="post-header">
+                <div class="blog-no-header"></div>
+            </div>
+            <div class="post-body">
+                <div class="meta">
+                    <i class="icon-date"></i> 
+                    <time itemprop="datePublished" datetime="15 October 2014" class="date">
+                        15 October 2014
+                    </time>
+                </div>
+                <h2 class="title" itemprop="name">Middlewares In Laravel 5</h2>
+                <div class="content" itemprop="description">
+                    <p>Laravel 5 made the guy who has been working behind the curtains for about two years a first class citizen. Lets talk about those Middlewares.</p>
+
+<p>Middlewares are not new to Laravel, they were always here and serving the purpose they are created for - its just that you never bothered about them. Not to worry, let me tell you more about them.
+When an HTTP request enters a Laravel App it goes through several layers before reaching the controller and invoking the action it is supposed to invoke, those layers in between are responsible for things like checking Cookie, queuing Cookies, CSRF protection, Authentication check and a couple other things. All these actions are carried out by Middlewares.
+So Middlewares are invoked after the app receives the HTTP request and before the request reaches the controller, that is why they are called Middlewares. Laravel has them since very beginning but until 4.2 they were backstage workers working behind the scene, also there were only a few of them - Encryption/Decryption, Cookie Guard, Cookie Queue and Session Middleware. Now, in version 5 Laravel replaces filters with Middlewares.</p>
+
+<p>So you guessed it, now all the crazy stuff you used to do with filters can be done with Middlewares, and dont worry about it because like everything else in laravel setting up middlewares is just as easy as it could possibly be.</p>
+
+<h3>We Start In Terminal</h3>
+
+<p>Artisan ships with the command to make middleware, you can generate a middleware by running:</p>
+<div class="highlight"><pre><code class="language-" data-lang=""><span class="vg">php</span><span class="w"> </span><span class="vg">artisan</span><span class="w"> </span><span class="nl">make:</span><span class="vg">middleware</span><span class="w"> </span><span class="vg">App</span><span class="o">\\</span><span class="vg">Http</span><span class="o">\\</span><span class="vg">Middlewares</span><span class="o">\\</span><span class="vg">AdminGuardMiddleware</span>
+</code></pre></div>
+<p>and you should see the file at <code>app/Http/Middlewares/AdminGuardMiddleware.php</code>. Great, lets open it up.</p>
+
+<p>The codes generated by Artisan should be something like this:</p>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="k">namespace</span> <span class="nx">App\Http\Middleware</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">Closure</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Illuminate\Contracts\Routing\Middleware</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">AdminGuardMiddleware</span> <span class="k">implements</span> <span class="nx">Middleware</span> <span class="p">{</span>
+
+    <span class="sd">/**</span>
+<span class="sd">    * Handle an incoming request.</span>
+<span class="sd">    *</span>
+<span class="sd">    * @param  \Illuminate\Http\Request  $request</span>
+<span class="sd">    * @param  \Closure  $next</span>
+<span class="sd">    * @return mixed</span>
+<span class="sd">    */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">handle</span><span class="p">(</span><span class="nv">$request</span><span class="p">,</span> <span class="nx">Closure</span> <span class="nv">$next</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">//</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><code>handle()</code> method is where we define the behavior of the middleware.
+So, now you want to guard every route to <code>/admin/*</code> and make it accessible only if - say - the request originates from a certain IP address, or it has <code>X-Role-Admin</code> header set with some value.
+the <code>handle()</code> method will receive the <code>Request</code> and a closure object <code>$next</code> which will send the request to the other middlewares. Now that we have the request object we can check for whatever condition we want.</p>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="k">public</span> <span class="k">function</span> <span class="nf">handle</span><span class="p">(</span><span class="nv">$request</span><span class="p">,</span> <span class="nx">Closure</span> <span class="nv">$next</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Make sure the request is coming from trusted source</span>
+    <span class="c1">// and let it pass through the middleware stack</span>
+    <span class="k">if</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">ip</span><span class="p">()</span> <span class="o">===</span> <span class="s1">&#39;75.24.36.240&#39;</span> <span class="k">or</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;X-Role-Admin&#39;</span><span class="p">)</span> <span class="o">===</span> <span class="s1">&#39;SECRET&#39;</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$next</span><span class="p">(</span><span class="nv">$request</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">// If request source is not trusted then throw </span>
+    <span class="c1">// Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException</span>
+    <span class="k">throw</span> <span class="k">new</span> <span class="nx">AccessDeniedHttpException</span><span class="p">(</span><span class="s1">&#39;Access not allowed&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Now that we have a middleware we know will do the job lets register it. All you have to do now is just open up <code>app/Providers/AppServiceProvider</code> and if you want to run this middleware on every request then update the <code>$stack</code> array or if you want to use it as a filter then do so in <code>$middleware</code> array.
+If you register the middleware as a filter then you can use it in usual way on whatever route or controller you want to. So</p>
+
+<p>``php</p>
+
+<p>class SomeController extends Controller
+{
+    public function _<em>construct()
+    {
+        $this-&gt;beforeFilter(&#39;admin</em>auth_controller&#39;);
+    }
+}
+```</p>
+
+<p>will work just fine, assuming that you have registered it with name &#39;admin<em>auth</em>controller&#39;.</p>
+
+                </div> 
+            </div>
+            <div class="post-tags">
+                <i class="icon-tags"></i>
+                
+                <a class="tag_list_link" href="/tag/Laravel 5">Laravel 5</a>
+                <span class="seperator">|</span>
+                
+                <a class="tag_list_link" href="/tag/Laravel 4.3">Laravel 4.3</a>
+                <span class="seperator">|</span>
+                
+                <a class="tag_list_link" href="/tag/Tips">Tips</a>
+                <span class="seperator">|</span>
+                
+            </div>
+            <ul class="post-socials">
+                <li><a href="https://www.facebook.com/sharer/sharer.php?u=http://www.gufran.me/post/middleware-in-laravel&t=Middlewares In Laravel 5" target="_blank"><i class="icon-facebook"></i></a></li>
+                <li><a href="https://twitter.com/intent/tweet?original_referer=http://www.gufran.me/post/middleware-in-laravel&text=Middlewares In Laravel 5&url=http://www.gufran.me/post/middleware-in-laravel" target="_blank"><i class="icon-twitter"></i></a></li>
+                <li><a href="https://plus.google.com/share?url=http://www.gufran.me/post/middleware-in-laravel" target="_blank"><i class="icon-google-plus"></i></a></li>
+            </ul>
+            <div id="disqus_thread" itemprop="comment"></div>
+            <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments.</a></noscript>
+        </div>
+    </div>
+    <div id="blog-pagination">
+        <ul>
+        	 
+            <li class="prev"><a href="http://www.gufran.me/post/lets-take-a-look-at-laravel-4-3"><i class="icon-arrow-left"></i><span>Prev</span></a></li>
+            
+             
+            <li class="separator"></li>
+            
+            
+        </ul>
+    </div>
+</div>
+<script>
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//gufran-me.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+ </div>
+       <footer>
+        <div class="author">
+          <div class="container">
+            <div class="row" itemscope itemprop="author" itemtype="http://schema.org/Person">
+              <div class="col-md-4 col-sm-3 hidden-xs">
+                <img class="avatar" itemprop="image" src="http://www.gravatar.com/avatar/61a886b6d8b8e349a0ad8624992bc716?s=500" alt="Gufran">
+              </div>
+              <div class="col-md-8 col-sm-9">
+                <p><em>Hi, there!</em> My name is <span itemprop="name">Mohammad Gufran</span>.</p>
+                <p itemprop="description">I am a <span itemprop="jobTitle">programmer</span> who create things for web. Most of my time is spent in front of my computer browsing the web and writing codes for next cool project. I am a lifelong learner.<br/>You can contact me using email or send me a tweet.</p>
+                <div class="row" role="contentinfo">
+                  <div class="col-md-3 col-sm-3 social-button">
+                    <a class="author-link" rel="author" href="http://github.com/Gufran" target="_blank">
+                      <i class="icon-github"></i> github
+                    </a>
+                  </div>
+                  <div class="col-md-3 col-sm-3 social-button">
+                    <a class="author-link" rel="author" href="http://twitter.com/freatbeater" target="_blank">
+                      <i class="icon-twitter"></i> twitter
+                    </a>
+                  </div>
+                  <div class="col-md-3 col-sm-3 social-button">
+                    <a class="author-link" rel="author" href="http://plus.google.com/+GufranKhan24" target="_blank">
+                      <i class="icon-google-plus"></i> google+
+                    </a>
+                  </div>
+                  <div class="col-md-3 col-sm-3 social-button">
+                    <a class="author-link contact-link" href="#" target="_blank">
+                      <i class="icon-mail"></i> contact
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="bottom">
+            <div class="container">
+                <div id="copyright">All content, unless specified otherwise,  is available under <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Common License with Attribution and Share Alike</a></div>
+            </div>
+        </div>   
+       </footer> 
+       <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+       <script type="text/javascript" src="/js/custom.201410072054.js"></script>   
+      <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-46671921-1', 'gufran.me');
+        ga('require', 'displayfeatures');
+        ga('send', 'pageview');
+      </script>
+    </body>
+</html>
