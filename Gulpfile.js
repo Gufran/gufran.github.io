@@ -23,3 +23,5 @@ gulp.task('css', function () {
 		.pipe(minifyCSS())
 		.pipe(gulp.dest('css/build'))
 });
+
+gulp.task('default', ['css']);

@@ -1,8 +1,3 @@
-/* azee - Minimal Blog theme for Jekyll v1.0
-@2014 owwwlab
-http://themeforest.net/user/owwwlab/portfolio 
-**************************************************/
-
 body{
     font-family: 'fira-sans', 'Open Sans', sans-serif;
     font-size:15px;
@@ -57,16 +52,14 @@ h4 {
     font-weight: 400;
 }
 
-
-/*Header 
- **************************************************/
 header{
     background: #ffffff;
     padding: 15px;
     text-align: center;
     position: relative;
     overflow: hidden;
-    border-bottom: 1px solid #c8c8c8;
+    border-bottom: 1px solid #e2e2e2;
+    box-shadow: 0 2px 2px #ccc;
 }
 
 #logo{
@@ -113,9 +106,10 @@ header{
 }
 
 #nav li a{
-    color: #666666;
+    color: #888888;
     font-size: 14px;
-    text-transform: uppercase;
+    font-weight: bold;
+    text-transform: capitalize;
     font-family: 'fira-sans', 'Open Sans', sans-serif;
     padding: 5px;
     margin-right:12px;
@@ -126,7 +120,7 @@ header{
 }
 
 #nav li a:hover,#nav li a:focus,#nav li.active a{
-    color: #767777;
+    color: #666666;
 }
 
 
@@ -231,7 +225,7 @@ header{
 }
 .page-contents{
     padding: 100px;
-    background: #f5f5f5;
+    background: #ffffff;
     margin-bottom: 50px;
 }
 .page-contents .first-elem{
@@ -256,9 +250,14 @@ header{
  **************************************************/
 .post-item{
     padding: 100px;
-    background: #f5f5f5;
+    background: #ffffff;
     margin-bottom: 50px;
     border: 1px solid #e0e0e0;
+    transition: all 0.5s ease;
+}
+
+.post-item:hover {
+    box-shadow: 1px 1px 5px #ddd, -1px -1px 5px #ddd;
 }
 
 .post-item .post-header img{
@@ -345,7 +344,7 @@ header{
 }
 
 .post-item .post-more{
-    background: #fdfdfd;
+    background: #ffffff;
     color:#666666;
     padding: 7px 20px;
     border: 1px solid #e0e0e0;
@@ -357,9 +356,9 @@ header{
     transition: all .25s ease;
 }
 
-
 .post-item .post-more:hover{
     color: #000000;
+    border: 1px solid #dddddd;
 }
 .post-item.no-header .post-body{
     padding-top: 0;
@@ -430,7 +429,7 @@ header{
 .post-socials li a{
     font-size: 16px;
     display: block;
-    background: #fdfdfd;
+    background: #ffffff;
     color: #494949;
     width: 39px;
     height: 39px;
@@ -442,7 +441,7 @@ header{
 }
 
 .post-socials li a:hover{
-    background: #ddd;
+    border: 1px solid #dddddd;
 }
 .post-tags{
     float:left;
