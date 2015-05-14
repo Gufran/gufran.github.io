@@ -223,3 +223,12 @@ pre {
 .highlight {
     margin-bottom: 10px;
 }
+
+blockquote {
+    border-left: 10px solid #dddddd;
+    padding-left: 10px;
+}
+
+blockquote p {
+    font-style: italic;
+}

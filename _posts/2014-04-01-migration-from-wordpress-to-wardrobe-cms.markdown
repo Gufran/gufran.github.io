@@ -15,6 +15,8 @@ tags:
 
 ---
 
+**Well, Now this blog is powered by Jekyll but read on if you want to.**
+
 If this is not your first time on this blog then you might notice few changes here and there. I just moved my blog from Wordpress to [Wardrobe CMS](http://wardrobecms.com).  
 I spent last couple of days deciding and planning the migration from Wordpress and I can't think of anything better than moving this entire thing to Laravel.
 

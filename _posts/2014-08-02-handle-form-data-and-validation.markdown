@@ -17,6 +17,8 @@ tags:
 
 ---
 
+**Note: This package has been deprecated in favour of self validating requests in Laravel 5, however you should still be able to use it in some other project. Let me know if you need any help with that.**
+
 A frequently asked question among developers is _"Where should I put validation logic ?"_, and My not so popular answer to the question is _"Put it in the form."_  
 And without getting into any debate about it let me introduce you to my [new package _Former_](https://github.com/Gufran/former), which I extracted out of a project I am working on.
 
