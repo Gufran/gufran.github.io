@@ -1,0 +1,243 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="Visibility In OOP">
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="google-site-verification" content="jVNul_ZvsOPuGmV4Y85HMquZOpo8z0nH4ViodkMePpY">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="twitter:site" content="@freatbeater">
+        <meta name="twitter:creator" content="@freatbeater">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Blag Of A Programmer">
+        <meta name="generator" content="Hodor">
+        <link rel="canonical" href="http://www.gufran.me" />
+
+        <title>Visibility In OOP</title>
+
+        <script src="//use.typekit.net/mnk2fni.js"></script>
+        <script>try{Typekit.load();}catch(e){}</script>
+        
+        <link rel="stylesheet" href="/css/build/style.201505150104.css">
+
+    </head>
+    <body>
+        <header id="mobile-header" class="visible-xs">
+            <a id="home" href="http://www.gufran.me">
+                <i class="icon-home"></i> Home
+            </a>
+            <label for="menu-button-check" class="nav-menu-button">
+                <span></span>
+                <span class="mid"></span>
+                <span></span>
+            </label>
+        </header>
+        <input type="checkbox" id="menu-button-check" class="hidden">
+        <header id="main-header">
+            <ul id="nav">
+                <li class=" hidden-xs">
+                    <a href="http://www.gufran.me">
+                        <i class="icon-home"></i> Home
+                    </a>
+                </li>
+                <li class="">
+                    <a href="/tags/">
+                        <i class="icon-tags"></i> Tags
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="contact-link" id="contact-section" target="_blank">
+                        <i class="icon-mail"></i> Contact
+                    </a>
+                </li>
+                <li>
+                    <a href="http://github.com/Gufran" target="_blank">
+                        <i class="icon-github"></i> Github
+                    </a>
+                </li>
+                <li>
+                    <a href="http://twitter.com/freatbeater" target="_blank">
+                        <i class="icon-twitter"></i> Twitter
+                    </a>
+                </li>
+            </ul>
+        </header>
+        <div id="main-contents">
+<div class="single-post">
+    <div class="container">
+        <div class="post-item" itemscope itemtype="http://schema.org/BlogPosting" role="article">
+            <div class="post-header">
+                <div class="blog-no-header"></div>
+            </div>
+            <div class="post-body">
+                <div class="meta">
+                    <i class="icon-date"></i> 
+                    <time itemprop="datePublished" datetime="22 August 2015" class="date">
+                        22 August 2015
+                    </time>
+                </div>
+                <h2 class="title" itemprop="name">Visibility In OOP</h2>
+                <div class="content" itemprop="description">
+                    <p>My programming career goes all the way back to my first year in college when I started freelancing. All I knew about programming at that time was stuff I was taught in school, and a really bad cocktail of functional and object oriented language concepts. I also knew that you have these cheeky <code>public</code>, <code>private</code>, <code>protected</code> and <code>final</code> keywords in <em>almost every</em> object oriented language to set the visibility of a method or variable. What I didn&#39;t know was, why would you ever need anything other than <code>public</code> visibility? I mean what&#39;s the point of a class variable if you can&#39;t even access it, right? OK, maybe you can use <code>protected</code> in some cases but <code>private</code>.. guuh! Why have two different keywords for similar functionality?</p>
+
+<p>And then I learned things.<br>
+I read a lot of books, so many coding horrors, a plethora of code, and I participated in conversations, asked questions and sometimes got yelled at, but in the end I learned so many cool things.<br>
+Cool things that I wasn&#39;t sure I should share with anyone, because they&#39;ll yell at me and put up an argument about having opinions (<em>no shit, boy</em>).<br>
+All that until I came across this talk by Marco Ocramius, <a href="https://www.youtube.com/watch?v=vS0Nn_ncH-8">Extremely Defensive PHP</a>, thanks to <a href="https://twitter.com/@librianrahul">Rahul</a> for sharing it.<br>
+In this talk Marco discussed extremely defensive programming practices in PHP; practices that work well for long lived projects. And this talk <a href="http://ocramius.github.io/extremely-defensive-php/#/15">inspired me</a> a lot that I finally decided to write this blog post.</p>
+
+<p>The gist of the talk is that you should be writing <em>stupid proof</em> code. Code that can only be used in a way that you made it to be used for. No one should be able to use the code in any other manner than is specified. It&#39;s a really good talk and I recommend that you go ahead and watch the video.<br>
+Marco covered a lot of ground on visibility and accessibility in his <a href="http://ocramius.github.io/blog/when-to-declare-classes-final/">blog post</a>, and I am going to put my thoughts on top of this very blog post.</p>
+
+<p>I compiled a list of points made my Marco.</p>
+
+<ol>
+<li>Prevent massive inheritance chain of doom</li>
+<li>Encourage composition</li>
+<li>Encapsulate properly</li>
+<li>Work towards abstraction</li>
+</ol>
+
+<p>Lets get started with this list. If you want to achieve most of it, I have four tips for you.</p>
+
+<ol>
+<li>Make extensible class abstract</li>
+<li>Make non abstract class final</li>
+<li>Non abstract class can have only public or private members</li>
+<li>Only abstract class can have protected members</li>
+</ol>
+
+<h3>Make extensible class abstract.</h3>
+
+<p>Extending a class is a separate use case in its own. Most of the times you extend a non-abstract class you are going to violate <em>SRP</em>.<br>
+Marking a class <code>abstract</code> takes away the responsibility of the class and you can only use it for functionality that is <a href="http://ocramius.github.io/extremely-defensive-php/#/37">truly re-usable in an <em>abstract</em> sense</a>. This will force you to think about the concerns of your code and separate them.<br>
+Inject dependencies instead of inheriting from them, and if you still believe that a class must extend from a non-abstract class, you need to re-factor this would-be-parent class and extract that logic which make you want to extend the class so desperately into an abstract class.</p>
+
+<h3>Make non abstract class final.</h3>
+
+<p>Every class which is not abstract has its own concerns to deal with. When you extend it you are essentially adding concerns to the class. When you extend, the child class is now responsible for the concerns of its own <em>plus</em> the concerns of its parent.<br>
+Marking a class <code>final</code> tells the consumer to compose functionality, and it also restricts the level of accessibility to only public API, which ultimately make your code stupid proof.</p>
+
+<h3>Non abstract class can have only public or private members.</h3>
+
+<p>If a class is not abstract, its responsibilities are assumed to be saturated, at least for the current cycle. What that mean is, that no one should be adding any more functionality to it. Consumers should only be able to use the functionality provided by it.<br>
+If you can have only one of public or a privately accessible method, you no longer have to worry about the extension. This also allows you to change the underlying functionality of public API as much as you want, without breaking inheritable functionality of the class.<br>
+And guess what? You can make it <code>final</code> without even thinking about it.</p>
+
+<h3>Only abstract class can have protected members.</h3>
+
+<p>For most of the people I know out there, it is a subconscious decision to make every property protected. Why? I don&#39;t know. And I almost stopped caring, <a href="http://ocramius.github.io/extremely-defensive-php/#/66">until today</a>.<br>
+Protected members are inherited by child classes and an abstract class completely justifies a protected member. If the class is abstract and it has a protected member it actively indicates that the member has a function which is not supposed to be available publicly but is a requirement for extension. Otherwise it is just another private member with a misleading access level.<br>
+I recommend that you make it a habit to declare members <code>private</code>, and question yourself every time you declare a member with <code>protected</code> access level. If you think that the <code>protected</code> access is actually required it is most likely going to be the hidden piece of re-usable code.</p>
+
+<h3>Putting it all together</h3>
+
+<p>It will probably make you want to kill me but if you maintain at least one open source project you&#39;ll know how important it is to clearly <a href="http://ocramius.github.io/extremely-defensive-php/#/19">define the behavioral specifications</a> for your code.<br>
+You can control every extension point in a project using five keywords and enforce the expectations. Stupid proof code will kick you in the butt every time you make a stupid decision. It will force you to think and wonder about stuff that you could&#39;ve never had thought about.</p>
+
+<h3>Links</h3>
+
+<ol>
+<li>Slides presented by Marco are available <a href="http://ocramius.github.io/extremely-defensive-php">here</a></li>
+</ol>
+
+                </div> 
+            </div>
+            <div class="post-tags">
+                <i class="icon-tags"></i>
+                
+                <a class="tag_list_link" href="/tag/Programming">Programming</a>
+                <span class="seperator">|</span>
+                
+                <a class="tag_list_link" href="/tag/Tips">Tips</a>
+                <span class="seperator">|</span>
+                
+                <a class="tag_list_link" href="/tag/Software Design">Software Design</a>
+                <span class="seperator">|</span>
+                
+            </div>
+            <ul class="post-socials">
+                <li><a href="https://www.facebook.com/sharer/sharer.php?u=http://www.gufran.me/post/visibility-in-oop&t=Visibility In OOP" target="_blank"><i class="icon-facebook"></i></a></li>
+                <li><a href="https://twitter.com/intent/tweet?original_referer=http://www.gufran.me/post/visibility-in-oop&text=Visibility In OOP&url=http://www.gufran.me/post/visibility-in-oop" target="_blank"><i class="icon-twitter"></i></a></li>
+                <li><a href="https://plus.google.com/share?url=http://www.gufran.me/post/visibility-in-oop" target="_blank"><i class="icon-google-plus"></i></a></li>
+            </ul>
+            <div id="disqus_thread" itemprop="comment"></div>
+            <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments.</a></noscript>
+        </div>
+    </div>
+    <div id="blog-pagination">
+        <ul>
+        	 
+            <li class="prev"><a href="http://www.gufran.me/post/i-dont-like-programming"><i class="icon-arrow-left"></i><span>Prev</span></a></li>
+            
+             
+            <li class="separator"></li>
+            
+            
+        </ul>
+    </div>
+</div>
+<script>
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//gufran-me.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+ </div>
+       <footer>
+        <div class="author">
+          <div class="container">
+            <div class="row" itemscope itemprop="author" itemtype="http://schema.org/Person">
+              <div class="col-md-4 col-sm-3 hidden-xs">
+                <img class="avatar" itemprop="image" src="http://www.gravatar.com/avatar/61a886b6d8b8e349a0ad8624992bc716?s=500" alt="Gufran">
+              </div>
+              <div class="col-md-8 col-sm-9">
+                <p>Hey, there! My name is <span itemprop="name">Mohammad Gufran</span>.</p>
+                <p itemprop="description">I am a <span itemprop="jobTitle">programmer</span> who create things for web. Most of my time is spent in front of my computer browsing the web and writing codes for next cool project. I am a lifelong learner.<br/>You can contact me using email or send me a tweet.</p>
+                <div class="row" role="contentinfo">
+                  <div class="col-md-3 col-sm-3 social-button">
+                    <a class="author-link" rel="author" href="http://github.com/Gufran" target="_blank">
+                      <i class="icon-github"></i> github
+                    </a>
+                  </div>
+                  <div class="col-md-3 col-sm-3 social-button">
+                    <a class="author-link" rel="author" href="http://twitter.com/freatbeater" target="_blank">
+                      <i class="icon-twitter"></i> twitter
+                    </a>
+                  </div>
+                  <div class="col-md-3 col-sm-3 social-button">
+                    <a class="author-link" rel="author" href="http://plus.google.com/+GufranKhan24" target="_blank">
+                      <i class="icon-google-plus"></i> google+
+                    </a>
+                  </div>
+                  <div class="col-md-3 col-sm-3 social-button">
+                    <a class="author-link contact-link" href="#" target="_blank">
+                      <i class="icon-mail"></i> contact
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="bottom">
+            <div class="container">
+                <div id="copyright">All content, unless specified otherwise,  is available under <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Common License with Attribution and Share Alike</a></div>
+            </div>
+        </div>   
+       </footer> 
+       <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+       <script type="text/javascript" src="/js/custom.201505150104.js"></script>   
+      <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-46671921-1', 'gufran.me');
+        ga('require', 'displayfeatures');
+        ga('send', 'pageview');
+      </script>
+    </body>
+</html>
