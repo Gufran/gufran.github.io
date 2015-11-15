@@ -6,24 +6,24 @@
     $emptyHeaders.remove();
 })(jQuery);
 
-;(function(a) {
+;(function($) {
     'use strict';
 
-    a.fn.liveFilter = function(b, c, d) {
+    $.fn.liveFilter = function(b, c, d) {
         var e = {
                 filterChildSelector: null,
                 filter: function(b, c) {
-                    return a(b).text().toUpperCase().indexOf(c.toUpperCase()) >= 0
+                    return $(b).text().toUpperCase().indexOf(c.toUpperCase()) >= 0
                 },
                 before: function() {},
                 after: function() {}
             },
-            d = a.extend(e, d),
-            f = a(this).find(c);
+            d = $.extend(e, d),
+            f = $(this).find(c);
         d.filterChildSelector && (f = f.find(d.filterChildSelector));
         var g = d.filter;
-        a(b).keyup(function() {
-            var b = a(this).val(),
+        $(b).keyup(function() {
+            var b = $(this).val(),
                 e = f.filter(function() {
                     return g(this, b)
                 }),
