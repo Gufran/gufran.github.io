@@ -7,12 +7,17 @@ build:
 	@gulp
 	@jekyll build
 
-# Build and publish changes
+# Build and publish changes. This will push source changes
+# to source branch and built website to master branch.
 .PHONY : deploy
 deploy: build
 	@git add .
 	@git commit
-	@git push origin master
+	@git branch -D master
+	@git checkout -b master
+	@git filter-branch --subdirectory-filter public/ -f
+	@git checkout source
+	@git push --all origin
 
 # Clean out everything and start from scratch
 .PHONY : setup
