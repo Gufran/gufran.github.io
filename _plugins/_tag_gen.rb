@@ -24,7 +24,7 @@ module Jekyll
       self.read_yaml(File.join(base, '_layouts'), 'tag_index.html')
       self.data['title'] = "Browse All tags"
       self.data['tag_bags'] = []
-      self.data['tag_url'] = File.join(site.config['url'], site.config['tag_dir'])
+      self.data['tag_url'] = File.join('/', site.config['tag_dir'])
     end
 
     def load_tag_bag(bags)
