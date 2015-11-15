@@ -1,21 +1,27 @@
+# Build the website. Two builds are necessary becase gulp will
+# compile and remove unused css, second build will simply copy
+# the new css file to public directory
 .PHONY : build
 build:
 	@jekyll build
 	@gulp
 	@jekyll build
 
+# Build and publish changes
 .PHONY : deploy
 deploy: build
 	@git add .
 	@git commit
 	@git push origin master
 
+# Clean out everything and start from scratch
 .PHONY : setup
 setup:
 	@rm -rf node_modules/
 	@rm -rf public/
 	@npm install
 
+# Create a new scratch post and initialise it with front matter
 .PHONY : post
 post:
 	@read -e -p "  ==> Enter a title for new post: " title;                                                                                                       \
