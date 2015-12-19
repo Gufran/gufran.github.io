@@ -1,7 +1,6 @@
 var gulp       = require('gulp');
 var uncss      = require('gulp-uncss');
 var glob       = require('glob');
-var yaml       = require('js-yaml');
 var fs         = require('fs');
 var concatCss  = require('gulp-concat-css');
 var prefixer   = require('gulp-autoprefixer');
@@ -12,12 +11,10 @@ var htmlFiles  = glob.sync('public/page*/**/*.html')
 		         .concat(glob.sync('public/post*/**/*.html'))
 		         .concat(glob.sync('public/tag*/**/*.html'))
 		         .concat('public/index.html');
-var conf       = yaml.safeLoad(fs.readFileSync('_config.yml', 'utf8'));
-var version    = conf.version;
 
 gulp.task('css', function () {
 	gulp.src(['css/bootstrap.css', 'css/style.css', 'css/custom.css', 'css/icomoon.css', 'css/solarized.css'])
-		.pipe(concatCss("style." + version + ".css"))
+		.pipe(concatCss("style.css"))
 		.pipe(prefixer({
 			browsers: ['> 2%', 'last 3 versions', 'Firefox ESR', 'Opera 12.1']
 		}))
