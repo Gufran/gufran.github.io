@@ -5,7 +5,7 @@ title: My Resolution For 2016
 permalink: post/my-resolution-for-2016
 date: 2015-12-18
 
-excerpt: "The kind of a person I want be in year 2016"
+excerpt: "The kind of a person I want to be in year 2016"
 
 tags:
   - "Post"
@@ -18,7 +18,7 @@ promised to achieve this year. For me, this year was a part of a bigger promise,
 a list of things that I'll try to do by the time earth will complete one more revolution around the 
 sun.  
 
-I know it is too early for a list of resolutions. I know earth is not yet at that arbitrary
+I know it is too early for a list of resolutions. I know earth is not at that arbitrary
 location in space yet, but hey, come on! I have time to write and publish this post right now, I 
 don't know if I'd even want to do it if I leave it for the right time.
 
@@ -50,9 +50,9 @@ I want to:
 
 1. Continue asking questions and debating.
 
-1. Respect all opinions just as long as they don't mindlessly defer to the text from any old book 
-   as ammunition for prejudice and meanness. In later case, politely refuse to continue the
-   conversation.
+1. Respect all opinions just as long as there is no unreasonable or illogical reason behind their
+   existence. If they stem solely out of one's belief in a particular book or person, politely 
+   refuse to continue the conversation.
 
 1. Shut up in emotionally charged situation. It takes a lot of understanding between two people to
    reconcile an emotional conflict. Not everyone is good at handling emotions.
