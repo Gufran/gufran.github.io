@@ -80,13 +80,10 @@
                 </div>
                 <h2 class="title" itemprop="name">Visibility In OOP</h2>
                 <div class="content" itemprop="description">
-                    <p>My programming career goes all the way back to my first year in college when I started freelancing. All I knew about programming at that time was stuff I was taught in school, and a really bad cocktail of functional and object oriented language concepts. I also knew that you have these cheeky <code>public</code>, <code>private</code>, <code>protected</code> and <code>final</code> keywords in <em>almost every</em> object oriented language to set the visibility of a method or variable. What I didn&#39;t know was, why would you ever need anything other than <code>public</code> visibility? I mean what&#39;s the point of a class variable if you can&#39;t even access it, right? OK, maybe you can use <code>protected</code> in some cases but <code>private</code>.. guuh! Why have two different keywords for similar functionality?</p>
+                    <p>Note: <em>I removed a bunch of introductary text which used to be here.</em></p>
 
-<p>And then I learned things.<br>
-I read a lot of books, so many coding horrors, a plethora of code, and I participated in conversations, asked questions and sometimes got yelled at, but in the end I learned so many cool things.<br>
-Cool things that I wasn&#39;t sure I should share with anyone, because they&#39;ll yell at me and put up an argument about having opinions (<em>no shit, boy</em>).<br>
-All that until I came across this talk by Marco Ocramius, <a href="https://www.youtube.com/watch?v=vS0Nn_ncH-8">Extremely Defensive PHP</a>, thanks to <a href="https://twitter.com/@librianrahul">Rahul</a> for sharing it.<br>
-In this talk Marco discussed extremely defensive programming practices in PHP; practices that work well for long lived projects. And this talk <a href="http://ocramius.github.io/extremely-defensive-php/#/15">inspired me</a> a lot that I finally decided to write this blog post.</p>
+<p>I came across this talk by Marco Ocramius, <a href="https://www.youtube.com/watch?v=vS0Nn_ncH-8">Extremely Defensive PHP</a>.<br>
+In this talk Marco discussed extremely defensive programming practices in PHP; practices that work well for long lived projects. This talk <a href="http://ocramius.github.io/extremely-defensive-php/#/15">inspired me</a> to put down my own ideas in this post.</p>
 
 <p>The gist of the talk is that you should be writing <em>stupid proof</em> code. Code that can only be used in a way that you made it to be used for. No one should be able to use the code in any other manner than is specified. It&#39;s a really good talk and I recommend that you go ahead and watch the video.<br>
 Marco covered a lot of ground on visibility and accessibility in his <a href="http://ocramius.github.io/blog/when-to-declare-classes-final/">blog post</a>, and I am going to put my thoughts on top of this very blog post.</p>

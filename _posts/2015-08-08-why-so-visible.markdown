@@ -15,13 +15,10 @@ tags:
 
 ---
 
-My programming career goes all the way back to my first year in college when I started freelancing. All I knew about programming at that time was stuff I was taught in school, and a really bad cocktail of functional and object oriented language concepts. I also knew that you have these cheeky `public`, `private`, `protected` and `final` keywords in _almost every_ object oriented language to set the visibility of a method or variable. What I didn't know was, why would you ever need anything other than `public` visibility? I mean what's the point of a class variable if you can't even access it, right? OK, maybe you can use `protected` in some cases but `private`.. guuh! Why have two different keywords for similar functionality?
+Note: _I removed a bunch of introductary text which used to be here._
 
-And then I learned things.  
-I read a lot of books, so many coding horrors, a plethora of code, and I participated in conversations, asked questions and sometimes got yelled at, but in the end I learned so many cool things.  
-Cool things that I wasn't sure I should share with anyone, because they'll yell at me and put up an argument about having opinions (_no shit, boy_).  
-All that until I came across this talk by Marco Ocramius, [Extremely Defensive PHP](https://www.youtube.com/watch?v=vS0Nn_ncH-8), thanks to [Rahul](https://twitter.com/@librianrahul) for sharing it.  
-In this talk Marco discussed extremely defensive programming practices in PHP; practices that work well for long lived projects. And this talk [inspired me](http://ocramius.github.io/extremely-defensive-php/#/15) a lot that I finally decided to write this blog post.
+I came across this talk by Marco Ocramius, [Extremely Defensive PHP](https://www.youtube.com/watch?v=vS0Nn_ncH-8).  
+In this talk Marco discussed extremely defensive programming practices in PHP; practices that work well for long lived projects. This talk [inspired me](http://ocramius.github.io/extremely-defensive-php/#/15) to put down my own ideas in this post.
 
 The gist of the talk is that you should be writing _stupid proof_ code. Code that can only be used in a way that you made it to be used for. No one should be able to use the code in any other manner than is specified. It's a really good talk and I recommend that you go ahead and watch the video.  
 Marco covered a lot of ground on visibility and accessibility in his [blog post](http://ocramius.github.io/blog/when-to-declare-classes-final/), and I am going to put my thoughts on top of this very blog post.
