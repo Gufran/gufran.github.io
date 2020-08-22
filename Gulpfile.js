@@ -1,28 +1,35 @@
-var gulp       = require('gulp');
-var uncss      = require('gulp-uncss');
-var glob       = require('glob');
-var fs         = require('fs');
-var concatCss  = require('gulp-concat-css');
-var prefixer   = require('gulp-autoprefixer');
-var csscomb    = require('gulp-csscomb');
-var minifyCSS  = require('gulp-minify-css');
-var minifyHTML = require('gulp-minify-html');
-var htmlFiles  = glob.sync('public/page*/**/*.html')
-		         .concat(glob.sync('public/post*/**/*.html'))
-		         .concat(glob.sync('public/tag*/**/*.html'))
-		         .concat('public/index.html');
+const gulp       = require('gulp');
+const glob       = require('glob');
+const fs         = require('fs');
+const concatCss  = require('gulp-concat-css');
+const purgecss   = require('gulp-purgecss');
+const cleanCss   = require('gulp-clean-css');
+const htmlFiles  = glob.sync('docs/page*/**/*.html')
+		         .concat(glob.sync('docs/post*/**/*.html'))
+		         .concat(glob.sync('docs/tag*/**/*.html'))
+		         .concat('docs/index.html');
 
-gulp.task('css', function () {
-	gulp.src(['css/bootstrap.css', 'css/style.css', 'css/custom.css', 'css/icomoon.css', 'css/solarized.css'])
+const paths = {
+    styles: {
+        src: [
+            'css/bootstrap.css',
+            'css/style.css',
+            'css/custom.css',
+            'css/icomoon.css',
+            'css/solarized.css'
+        ],
+        dest: 'css/build'
+    }
+}
+
+function css() {
+	return gulp.src(paths.styles.src)
 		.pipe(concatCss("style.css"))
-		.pipe(prefixer({
-			browsers: ['> 2%', 'last 3 versions', 'Firefox ESR', 'Opera 12.1']
+		.pipe(purgecss({
+			content: htmlFiles
 		}))
-		.pipe(uncss({
-			html: htmlFiles
-		}))
-		.pipe(minifyCSS())
-		.pipe(gulp.dest('css/build'))
-});
+		.pipe(cleanCss())
+		.pipe(gulp.dest(paths.styles.dest));
+}
 
-gulp.task('default', ['css']);
+gulp.task('css', css);

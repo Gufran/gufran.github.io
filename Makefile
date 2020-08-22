@@ -1,30 +1,22 @@
 # Build the website. Two builds are necessary becase gulp will
 # compile and remove unused css, second build will simply copy
-# the new css file to public directory
+# the new css file to docs directory
 .PHONY : build
 build:
 	@jekyll build
-	@gulp
+	@gulp css
 	@jekyll build
 
-# Build and publish changes. This will push source changes
-# to source branch and built website to master branch.
-.PHONY : deploy
-deploy: build
-	@git add .
-	@git commit
-	@git branch -D master
-	@git checkout -b master
-	@git filter-branch --subdirectory-filter public/ -f
-	@git checkout source
-	@git push --all --force-with-lease origin
-
-# Clean out everything and start from scratch
-.PHONY : setup
+# Install needed components. Can't use Docker here because of phantomjs.
+# Jekyll is locked at version 3, because that is the latest one 
+# which supports redcarpet.
+# gulp is required in both local and global context because "requirement".
+.PHONY: setup
 setup:
-	@rm -rf node_modules/
-	@rm -rf public/
+	@gem install --version 3.9.0 jekyll
+	@gem install redcarpet jekyll-paginate
 	@npm install
+	@npm install -g "gulp"@"^4.0.2"
 
 # Create a new scratch post and initialise it with front matter
 .PHONY : post

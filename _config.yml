@@ -1,11 +1,12 @@
 name: "Blag"
 description: "Blag Of A Programmer"
 
-destination: public
+destination: docs
 
 url: "http://www.gufran.me"
 ga_domain: 'gufran.me'
 
+plugins: [jekyll-paginate]
 exclude: ['Makefile', 'LICENSE', 'node_modules', 'Gulpfile.js', 'package.json', 'css/bootstrap.css', 'css/custom.css', 'css/icomoon.css', 'css/solarized.css', 'css/style.css']
 
 permalink: /post/:title
@@ -28,7 +29,6 @@ excerpt_separator: "\n\n"
 user:
   github: Gufran
   twitter: freatbeater
-  google: +GufranKhan24
   disqus_shortname: gufran-me
   gravatar_hash: 61a886b6d8b8e349a0ad8624992bc716
 
@@ -39,7 +39,7 @@ kramdown:
   entity_output: as_char
   smart_quotes:  lsquo,rsquo,ldquo,rdquo
   fenced_code_blocks: true
-  use_coderay:   false
+  enable_coderay:   false
 
 redcloth:
   hard_breaks: true
